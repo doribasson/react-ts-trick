@@ -1,0 +1,39 @@
+import React from "react";
+
+// Define the types for a SidebarItem
+interface SidebarItem {
+  id: number;
+  label: string;
+  children?: SidebarItem[];
+}
+
+// Recursive Sidebar Component
+const Sidebar: React.FC<{ items: SidebarItem[] }> = ({ items }) => {
+  return (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>
+          {/* Render the item label */}
+          {item.label}
+          
+          {/* If the item has children, recursively render them */}
+          {item.children && item.children.length > 0 && (
+            <Sidebar items={item.children} />
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+// Use Sidebar component with the sidebar data
+const App: React.FC = () => {
+  return (
+    <div>
+      <h1>Sidebar</h1>
+      <Sidebar items={sidebarData} />
+    </div>
+  );
+};
+
+export default App;

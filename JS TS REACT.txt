@@ -1,0 +1,589 @@
+1. Using the Array constructor
+You can create an empty array using the Array constructor and then fill it dynamically.
+
+javascript
+Copy code
+// Create an empty array of length 5
+let arr = new Array(5);
+
+// Fill the array dynamically
+for (let i = 0; i < arr.length; i++) {
+  arr[i] = i * 2;
+}
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+2. Using an empty array literal []
+This is the most common way to create an array, and then elements can be added using various methods.
+
+javascript
+Copy code
+// Create an empty array
+let arr = [];
+
+// Dynamically add elements
+arr.push(1);
+arr.push(2, 3);
+arr[arr.length] = 4;
+
+console.log(arr); // Output: [1, 2, 3, 4]
+3. Using Array.from()
+Array.from() allows you to create and fill an array in one step.
+
+javascript
+Copy code
+// Create and fill an array from a mapping function
+let arr = Array.from({ length: 5 }, (v, i) => i * 2);
+
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+4. Using Array.prototype.fill()
+You can use fill() to fill an array with a static value.
+
+javascript
+Copy code
+// Create an array and fill it with a static value
+let arr = new Array(5).fill(0);
+
+console.log(arr); // Output: [0, 0, 0, 0, 0]
+You can combine this with map to dynamically fill the array:
+
+javascript
+Copy code
+let arr = new Array(5).fill(0).map((_, i) => i * 2);
+
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+5. Using for or while loop
+Dynamically filling an array can be done using traditional loops.
+
+javascript
+Copy code
+let arr = [];
+for (let i = 0; i < 5; i++) {
+  arr.push(i * 3);
+}
+
+console.log(arr); // Output: [0, 3, 6, 9, 12]
+6. Using spread operator and map()
+You can use the spread operator in combination with array methods like map.
+
+javascript
+Copy code
+let arr = [...Array(5)].map((_, i) => i * 2);
+
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+7. Using reduce()
+You can use reduce() to dynamically build an array.
+
+javascript
+Copy code
+let arr = Array(5).fill().reduce((acc, _, i) => {
+  acc.push(i * 2);
+  return acc;
+}, []);
+
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+8. Using Array.prototype.concat()
+You can concatenate multiple arrays to dynamically grow an array.
+
+javascript
+Copy code
+let arr = [].concat([1], [2, 3], [4]);
+
+console.log(arr); // Output: [1, 2, 3, 4]
+9. Using Array.apply(null, {length: N})
+You can create an array of a certain length and fill it dynamically.
+
+javascript
+Copy code
+let arr = Array.apply(null, { length: 5 }).map((_, i) => i * 2);
+
+console.log(arr); // Output: [0, 2, 4, 6, 8]
+10. Using Array.of()
+Array.of() creates an array with the passed elements, but can be useful in some cases when working with dynamic values.
+
+javascript
+Copy code
+let arr = Array.of(1, 2, 3);
+
+console.log(arr); // Output: [1, 2, 3]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Online Javascript Editor for free
+// Write, Edit and Run your Javascript code using JS Online Compiler
+
+const arr=[1,5,7,8,9,1]
+
+console.log(arr)
+let res=[]
+const uniqueArray = [...new Set(arr)];
+console.log(uniqueArray)
+
+
+const newarr=arr.map(itm => (itm>7)?"yes":"no" ) //{
+    //if (itm>7)  return "yes"
+    //else return "no"
+
+ //)
+console.log(newarr)
+
+arr.forEach(itm => {
+    if (itm>7)  res.unshift(itm)
+} )
+console.log(res)
+
+
+const resallarr=arr.reduce((acc,itm)=>{
+return acc=acc+itm
+},0)
+
+console.log(resallarr)
+
+const name="dori"
+console.log(Array.from(name))
+console.log([...name])
+console.log(name.split(""))
+
+let arr2 = [].concat([1,2,3],[...name],[6,7],100)
+console.log(arr2)
+
+
+[ 1, 5, 7, 8, 9, 1 ]
+[ 1, 5, 7, 8, 9 ]
+[ 'no', 'no', 'no', 'yes', 'yes', 'no' ]
+[ 9, 8 ]
+31
+[ 'd', 'o', 'r', 'i' ]
+[ 'd', 'o', 'r', 'i' ]
+[ 'd', 'o', 'r', 'i' ]
+[
+  1,   2,   3, 'd', 'o',
+  'r', 'i', 6, 7,   100
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+npx create-react-app shopping-cart --template typescript
+cd shopping-cart
+npm start
+2. Example: Shopping Cart with a Calculation Function
+src/components/ShoppingCart.tsx
+This component will display a list of products, allow the user to select quantities, and then calculate the total cost.
+
+tsx
+Copy code
+import React, { useState } from 'react';
+
+// Define the Product interface
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+// Define the CartItem interface (includes quantity of each product)
+interface CartItem extends Product {
+  quantity: number;
+}
+
+// List of sample products (this could be fetched from an API in a real app)
+const products: Product[] = [
+  { id: 1, name: 'Apple', price: 1.0 },
+  { id: 2, name: 'Banana', price: 0.5 },
+  { id: 3, name: 'Orange', price: 1.2 },
+];
+
+// ShoppingCart component
+const ShoppingCart: React.FC = () => {
+  // Cart state to manage selected products and their quantities
+  const [cart, setCart] = useState<CartItem[]>([]);
+
+  // Function to add a product to the cart (or update quantity if already added)
+  const addToCart = (product: Product) => {
+    setCart((prevCart) => {
+      const itemInCart = prevCart.find((item) => item.id === product.id);
+
+      if (itemInCart) {
+        // Update quantity if the product is already in the cart
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        // Add new product to the cart with quantity 1
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  // Function to calculate the total price of the cart
+  const calculateTotal = (): number => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  return (
+    <div>
+      <h1>Shopping Cart</h1>
+      
+      {/* Product list */}
+      <h2>Products</h2>
+      <ul>
+        {products.map((product) => (
+          <li key={product.id}>
+            {product.name} - ${product.price.toFixed(2)}
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
+          </li>
+        ))}
+      </ul>
+
+      {/* Cart summary */}
+      <h2>Cart</h2>
+      {cart.length === 0 ? (
+        <p>Your cart is empty.</p>
+      ) : (
+        <ul>
+          {cart.map((item) => (
+            <li key={item.id}>
+              {item.name} - ${item.price.toFixed(2)} x {item.quantity}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Total price */}
+      <h3>Total: ${calculateTotal().toFixed(2)}</h3>
+    </div>
+  );
+};
+
+export default ShoppingCart;
+src/App.tsx
+tsx
+Copy code
+import React from 'react';
+import './App.css';
+import ShoppingCart from './components/ShoppingCart'; // Import ShoppingCart component
+
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <ShoppingCart /> {/* Render the ShoppingCart component */}
+    </div>
+  );
+};
+
+export default App;
+3. Explanation
+Product data: A list of products is hard-coded for simplicity. In a real app, these might come from an API.
+
+State management: We use the useState hook to manage the shopping cart. Each cart item includes both the product and the quantity selected by the user.
+
+Cart logic: The addToCart function checks if the product is already in the cart. If so, it increases the quantity, and if not, it adds a new product with a quantity of 1.
+
+Calculation: The calculateTotal function calculates the total cost by summing the product of the price and quantity of each item in the cart using reduce.
+
+Display: The component renders the list of products with "Add to Cart" buttons, displays the cart's content, and shows the total price.
+
+4. Example Output
+When you run this app:
+
+You will see a list of products like "Apple - $1.00" with buttons to add each item to the cart.
+When you add an item to the cart, the cart will update to show the product name, price, and quantity.
+The total price of the items in the cart will be displayed and updated dynamically.
+This is a common pattern in real-world apps like e-commerce stores.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+General Syntax for reduce()
+ts
+Copy code
+array.reduce((accumulator, currentValue, currentIndex, array) => {
+  // logic
+}, initialValue);
+accumulator: Holds the accumulated result.
+currentValue: The current element being processed.
+currentIndex (optional): The index of the current element.
+array (optional): The array on which reduce is called.
+initialValue: The initial value for the accumulator.
+In TypeScript, you can provide types for both the accumulator and the current value.
+
+Example: Dynamic Array Creation with reduce()
+Here’s an example where we dynamically fill an array using reduce() in TypeScript.
+
+Example: Summing Numbers into an Array
+ts
+Copy code
+const numbers = [1, 2, 3, 4, 5];
+
+// Specify types: `accumulator` is an array of numbers, and `currentValue` is a number
+const result: number[] = numbers.reduce<number[]>((accumulator, currentValue) => {
+  accumulator.push(currentValue * 2); // double each value
+  return accumulator;
+}, []);
+
+console.log(result); // Output: [2, 4, 6, 8, 10]
+Key Points:
+The type number[] ensures that the accumulator is always an array of numbers.
+The reduce function processes each element of numbers and pushes its double into the accumulator array.
+Example: Building an Object Array with reduce()
+You can use reduce() in TypeScript to accumulate an array of objects. Here’s how:
+
+ts
+Copy code
+type Person = { name: string; age: number };
+
+const names = ['Alice', 'Bob', 'Charlie'];
+const ages = [25, 30, 35];
+
+// Create an array of `Person` objects
+const people: Person[] = names.reduce<Person[]>((accumulator, currentName, index) => {
+  const person: Person = { name: currentName, age: ages[index] };
+  accumulator.push(person);
+  return accumulator;
+}, []);
+
+console.log(people);
+// Output: [{ name: 'Alice', age: 25 }, { name: 'Bob', age: 30 }, { name: 'Charlie', age: 35 }]
+Explanation:
+Type Safety: We define the accumulator type as Person[], ensuring that the accumulator will always be an array of objects of type Person.
+Dynamic Array: In this case, the reduce() function is dynamically building an array of objects.
+Example: Summing Numbers (Simple Use of reduce())
+If you are summing numbers, here's a type-safe way to use reduce() in TypeScript:
+
+ts
+Copy code
+const numbers: number[] = [1, 2, 3, 4, 5];
+
+const sum: number = numbers.reduce<number>((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+
+console.log(sum); // Output: 15
+Explanation:
+reduce<number> ensures that both the accumulator and return value are numbers.
+Generic Example with reduce()
+You can also define a generic function that uses reduce():
+
+ts
+Copy code
+function accumulateArray<T>(array: T[], initialValue: T): T[] {
+  return array.reduce<T[]>((acc, curr) => {
+    acc.push(curr);
+    return acc;
+  }, [initialValue]);
+}
+
+const result = accumulateArray<number>([1, 2, 3], 0);
+console.log(result); // Output: [0, 1, 2, 3]
+
+
+const arr = [1,2,3,4,5]
+const reversedItems = arr.reverse().join('').split("");
+console.log(reversedItems)
+
+
+function reverse1(s) {
+  let o = '';
+  for (var i = s.length - 1; i >= 0; i--)
+    o += s[i];
+  return o;
+}
+
+console.log( reverse1(['a','b','c']).split('') )
+console.log( [...reverse1(['a','b','c'])] )
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+const countries = [
+  { name: 'USA', size: 9833517 },
+  { name: 'Canada', size: 9984670 },
+  { name: 'Brazil', size: 8515767 }
+];
+
+const result = countries.reduce((acc, { name, size }) => {
+  acc.names.push(name);
+  acc.sizes.push(size);
+  return acc;
+}, { names: [], sizes: [] });
+
+console.log(countries)
+
+{
+  names: [ 'USA', 'Canada', 'Brazil' ],
+  sizes: [ 9833517, 9984670, 8515767 ]
+}
+
+
+
+
+
+const names = countries.map(country => country.name);
+const sizes = countries.map(country => country.size);
+
+const result = Object.assign({}, { names, sizes });
+
+console.log(result);
+
+
+
+
+const result = { names: [], sizes: [] };
+
+countries.forEach(({ name, size }) => {
+  result.names.push(name);
+  result.sizes.push(size);
+});
+
+console.log(result);
+
+
+
+
+const result = countries.reduce((acc, { name, size }) => {
+  return {
+    names: [...acc.names, name],
+    sizes: [...acc.sizes, size]
+  };
+}, { names: [], sizes: [] });
+
+console.log(result);
+
+-----------------------------------------------------------------

@@ -1,0 +1,220 @@
+Using lodash for Debouncing:
+If you prefer to use lodash, it simplifies the debouncing:
+
+tsx
+Copy code
+import React, { useState } from 'react';
+import { debounce } from 'lodash';
+
+const DebounceInput: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [debouncedValue, setDebouncedValue] = useState<string>('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const debouncedHandleChange = debounce((value: string) => {
+    setDebouncedValue(value);
+  }, 500);
+
+  // Using useEffect to trigger the debounced function
+  React.useEffect(() => {
+    debouncedHandleChange(inputValue);
+  }, [inputValue]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleChange}
+        placeholder="Type something..."
+      />
+      <p>Debounced Value: {debouncedValue}</p>
+    </div>
+  );
+};
+
+export default DebounceInput;
+In this case, lodash provides a more concise way of handling debouncing. The debounce function automatically handles clearing the timeout when necessary.
+
+
+
+
+
+
+Example: Debounce Function 
+Create a Debounce Function: First, you need a debounce utility function that will return a debounced version of a given function. This function ensures that the action is only triggered after the user stops typing for a set delay.
+tsx
+Copy code
+const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+
+  return (...args: any[]) => {
+    if (timeoutId) {
+      clearTimeout(timeoutId); // Clear the previous timeout
+    }
+    timeoutId = setTimeout(() => {
+      func(...args); // Call the function after the delay
+    }, delay);
+  };
+};
+
+
+
+
+Use the Debounced Function in a Component: In the component, you'll call the debounced function when the input changes, but the actual update will only happen after the specified delay.
+tsx
+npm install lodash
+import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
+
+const DebounceInput: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>('');
+  const [debouncedValue, setDebouncedValue] = useState<string>('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const debouncedSetValue = debounce((value: string) => {
+    setDebouncedValue(value);
+  }, 500); // Debounce delay of 500ms
+
+  const handleDebouncedChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    debouncedSetValue(value); // Call the debounced function
+    setInputValue(value); // Set the immediate input value
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={inputValue}
+        onChange={handleDebouncedChange}
+        placeholder="Type something..."
+      />
+      <p>Debounced Value: {debouncedValue}</p>
+    </div>
+  );
+};
+
+export default DebounceInput;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Install lodash (if you haven't already):
+
+bash
+Copy code
+npm install lodash
+Debounced Search Component:
+
+tsx
+Copy code
+import React, { useState, useEffect } from 'react';
+import { debounce } from 'lodash';
+
+const SearchWithDebounce: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = useState<string>('');
+
+  // Function to handle input change
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value); // Immediately set the input value
+  };
+
+  // Debounced function that only triggers after the user stops typing for 500ms
+  const debouncedSearch = debounce((query: string) => {
+    setDebouncedSearchQuery(query); // Update the debounced search query
+  }, 500); // 500ms delay
+
+  // Effect to trigger the debounced search whenever the input value changes
+  useEffect(() => {
+    debouncedSearch(searchQuery); // Call the debounced function
+    // Cleanup function to cancel the debounce if the component unmounts
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [searchQuery]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchQuery}
+        onChange={handleInputChange}
+        placeholder="Search..."
+      />
+      <p>Search Query: {debouncedSearchQuery}</p>
+    </div>
+  );
+};
+
+export default SearchWithDebounce;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ to reinvent the wheel, I would suggest taking a look on https://www.npmjs.com/package/use-debounce which provides with useDebounce hook, that has leading and maxWait setting out of the box, so will allow you to configure leading debounce (from example()
+
+const [text, setText] = useState('Hello');
+const [value] = useDebounce(text, 1000, { leading: true, maxWait: 2000 });
+
+

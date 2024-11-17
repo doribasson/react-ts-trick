@@ -1,0 +1,122 @@
+npm create vite@latest my-react-app --template react-ts
+cd my-react-app
+npm install
+
+npm install react-window
+npm install --save-dev @types/react-window
+
+
+
+
+
+https://chatgpt.com/share/67177dd4-7f94-8003-8efe-7fc6debb0190
+
+https://chatgpt.com/share/67177ded-cc38-8003-8e72-d7a00a12d04c
+
+
+
+
+
+
+To prevent the text from wrapping onto a new line in a `react-window` list, you can use CSS to control the text overflow and ensure that it stays on a single line. Here’s how to do it:
+
+### 1. Update the Row Component
+
+In the `Row` component, you can set the appropriate CSS properties to prevent text wrapping. Specifically, you can use `white-space: nowrap` along with `overflow` properties to handle overflow scenarios.
+
+### Example Code
+
+Here's an updated example that includes the necessary CSS to ensure that the text does not wrap:
+
+```tsx
+import React from 'react';
+import { FixedSizeList as List } from 'react-window';
+import './App.css'; // Import your CSS file
+
+// Sample data
+const data = Array.from({ length: 1000 }, (_, index) => `Item ${index + 1} - This is a very long text that should not wrap`);
+
+const Row = ({ index, style }: { index: number; style: React.CSSProperties }) => (
+  <div style={style} className="row">
+    {data[index]}
+  </div>
+);
+
+const App: React.FC = () => {
+  return (
+    <div className="full-width-container">
+      <List
+        height={500}  // Height of the visible area
+        itemCount={data.length} // Total number of items
+        itemSize={35}  // Height of each item
+        width={'100%'} // Set width to 100%
+      >
+        {Row}
+      </List>
+    </div>
+  );
+};
+
+export default App;
+```
+
+### CSS (App.css)
+
+Here's how to set the CSS to ensure that the text does not wrap:
+
+```css
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+.full-width-container {
+  width: 100vw; /* Full viewport width */
+  overflow: hidden; /* Hide overflow */
+}
+
+.row {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  background-color: #fff; /* Background color for rows */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Optional: Add ellipsis for overflowing text */
+}
+```
+
+### Explanation of CSS Properties
+
+- **`white-space: nowrap`**: This prevents the text from wrapping onto a new line.
+- **`overflow: hidden`**: This hides any overflow text that doesn't fit in the container.
+- **`text-overflow: ellipsis`**: This optional property adds ellipses (`...`) to indicate that there is more text that isn't visible. To see this effect, you need to set a specific width on your rows, but in this case, the width is automatically determined by the list's width.
+
+### Customizing Further
+
+- If you want the text to have a maximum width and still show ellipses when it overflows, you can set a `max-width` in the `.row` class:
+
+```css
+.row {
+  /* ... other styles ... */
+  max-width: calc(100% - 20px); /* Adjust according to padding */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Optional */
+}
+```
+
+This ensures that the rows take the available width but will not exceed a certain maximum width.
+
+### Running the App
+
+After making these changes, run your Vite app:
+
+```bash
+npm run dev
+```
+
+You should see that the text in your `react-window` list now stays on a single line without wrapping. If you have any additional requirements or need further assistance, feel free to ask!

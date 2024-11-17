@@ -1,0 +1,14 @@
+findInstance
+
+const countInstance = (arr) => {
+    let count = new Map()
+    for (const num of arr){
+        count.set(num, (count.get(num) || 0) + 1)
+    }
+    return count
+}
+
+const res = countInstance([1,5,6,1,2,88,8,9,88,1,5])
+const mapToObj = Object.fromEntries(res);
+console.log(res)
+console.log(mapToObj)

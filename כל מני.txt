@@ -1,0 +1,124 @@
+function printTree(levels) {
+    let tree="";
+  for (let i = 1; i <= levels; i++) {
+    const spaces = ' '.repeat(levels - i);       
+    const stars = '*'.repeat(2 * i - 1); 
+    //console.log(spaces + stars + spaces);
+    tree=tree+spaces + stars + spaces+"\n"
+  }
+  tree=tree+' '.repeat(levels - 1)+'*'.repeat(1);
+  console.log(tree)
+}
+
+printTree(15);  // Change the number to make a taller or shorter tree
+
+
+
+              *              
+             ***             
+            *****            
+           *******           
+          *********          
+         ***********         
+        *************        
+       ***************       
+      *****************      
+     *******************     
+    *********************    
+   ***********************   
+  *************************  
+ *************************** 
+*****************************
+              *
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Basic for Loop Solution
+This approach uses two loops: one for each level and another to build each row with spaces and stars.
+
+javascript
+Copy code
+function printTree(levels) {
+  for (let i = 1; i <= levels; i++) {
+    let spaces = ' '.repeat(levels - i);
+    let stars = '*'.repeat(2 * i - 1);
+    console.log(spaces + stars + spaces);
+  }
+}
+
+printTree(5);
+2. Using Recursion
+This recursive approach uses a helper function to print each row until it reaches the desired number of levels.
+
+javascript
+Copy code
+function printTreeRecursive(levels, currentLevel = 1) {
+  if (currentLevel > levels) return;
+
+  let spaces = ' '.repeat(levels - currentLevel);
+  let stars = '*'.repeat(2 * currentLevel - 1);
+  console.log(spaces + stars + spaces);
+
+  printTreeRecursive(levels, currentLevel + 1);
+}
+
+printTreeRecursive(5);
+3. Using Array map and fill
+This functional approach uses an array with map and fill to construct each level in the tree.
+
+javascript
+Copy code
+function printTreeArray(levels) {
+  Array(levels).fill('').map((_, i) => {
+    const spaces = ' '.repeat(levels - i - 1);
+    const stars = '*'.repeat(2 * i + 1);
+    console.log(spaces + stars + spaces);
+  });
+}
+
+printTreeArray(5);
+4. Building the Tree in a String (for Logging Once)
+This version builds the entire tree as a single string and logs it at the end.
+
+javascript
+Copy code
+function printTreeAsString(levels) {
+  let tree = '';
+  for (let i = 1; i <= levels; i++) {
+    let spaces = ' '.repeat(levels - i);
+    let stars = '*'.repeat(2 * i - 1);
+    tree += spaces + stars + spaces + '\n';
+  }
+  console.log(tree);
+}
+
+printTreeAsString(5);
+5. Using a While Loop
+Here's a version that uses a while loop instead of a for loop.
+
+javascript
+Copy code
+function printTreeWhile(levels) {
+  let i = 1;
+  while (i <= levels) {
+    let spaces = ' '.repeat(levels - i);
+    let stars = '*'.repeat(2 * i - 1);
+    console.log(spaces + stars + spaces);
+    i++;
+  }
+}
+
+printTreeWhile(5);

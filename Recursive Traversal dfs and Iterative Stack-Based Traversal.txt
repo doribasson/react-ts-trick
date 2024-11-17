@@ -1,0 +1,134 @@
+const data = [
+  {
+    id: 1,
+    name: "document.pdf",
+    files: [
+      { id: 2, name: "notes.docx" },
+      { id: 3, name: "presentation.pdf" },
+    ],
+  },
+  {
+    id: 4,
+    name: "image.jpg",
+    details: {
+      subfiles: [
+        { id: 5, name: "report.pdf" },
+        { id: 6, name: "summary.txt" },
+      ],
+    },
+  },
+];
+
+
+
+
+const getPdfNamesIterative = (data) => {
+  const stack = [data];
+  const pdfNames = [];
+console.log(data,'data'); 
+console.log(stack,'stack'); 
+  while (stack.length > 0) {
+    const current = stack.pop();
+
+    for (const key in current) {
+      const value = current[key];
+
+      if (typeof value === "object" && value !== null) {
+        stack.push(value);
+      } else if (key === "name" && typeof value === "string" && value.endsWith(".pdf")) {
+        pdfNames.push(value);
+      }
+    }
+  }
+
+  return pdfNames;
+};
+
+// Usage
+const pdfNames = getPdfNamesIterative(data);
+//console.log(pdfNames); // ["document.pdf", "presentation.pdf", "report.pdf"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const data = [
+  {
+    id: 1,
+    name: "document.pdf",
+    files: [
+      { id: 2, name: "notes.docx" },
+      { id: 3, name: "presentation.pdf" },
+    ],
+  },
+  {
+    id: 4,
+    name: "image.jpg",
+    details: {
+      subfiles: [
+        { id: 5, name: "report.pdf" },
+        { id: 6, name: "summary.txt" },
+      ],
+    },
+  },
+];
+
+
+// Recursive function to find .pdf files
+const getPdfNames = (obj) => {
+  let pdfNames = [];
+
+  // Iterate through each key in the object or array
+  for (const key in obj) {
+    const value = obj[key];
+
+    // Check if value is an object or array to apply recursion
+    if (typeof value === "object" && value !== null) {
+      //console.log(pdfNames);
+      pdfNames = pdfNames.concat(getPdfNames(value));
+    } else if (key === "name" && typeof value === "string" && value.endsWith(".pdf")) {
+      pdfNames.push(value);
+    }
+  }
+
+  return pdfNames;
+};
+
+ const pdfNames = getPdfNames(data);
+ console.log(pdfNames)
+ 
+ 
+ 
+ 
+ 
+ 

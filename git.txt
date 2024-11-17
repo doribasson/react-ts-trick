@@ -1,0 +1,664 @@
+git init
+git clone
+ls
+git status
+git add dorifile .txt   git add -A
+git commit -m "committing"
+clear
+git log - give all comments
+git blame dorifile.txt - who did it
+git remote add origin https://github/dori.gits - remote git need to take the url
+git remote -v  - show the git remote url
+git pull origin main - update my local repo from the remote github need to be in the main
+git push origin main  - username and password before let you push push the change from local repo to remote repo github 
+
+git branch
+git brnach -vv  - tell which branch we are working  
+git checkout main
+git merge doriImage
+git commit - after we add added the file doriImage
+git add doriImage
+git commit -m "Adding doriImage"
+branch checkout main
+git merge doriImage -- need to be in main branch
+
+git branch
+git branch doriImage
+ git checkout doriImage
+
+מתוך הפיצר הברנץ שעובדים עליו כל העבדה הזאת והולכת למסטר MAIN 
+git branch doriImage2
+git checkout doriImage2
+git add doriImage2
+git comit
+git rebase main - t
+
+git checkout -b newbranch
+git branch -d branchname - delete branch
+
+git status have commited chaned
+git stash -u   - if we updated brnach and commited add and we want to move to other brnach 
+git status have clean
+git stash list - show the stash list
+git stash show
+git stash apply  - get the data back committed
+add data tempporllay
+
+A --- B --- C
+
+git rebase 
+Git moves the entire feature branch so it appears to start after the latest commit on main. This creates a linear history by "replaying" commits from feature on top of main.
+Run git checkout feature and then git rebase main.
+The history will now look like this:
+A --- B --- C --- D' --- E'
+
+git merge
+When you merge feature into main, Git creates a new "merge commit" that combines changes from both branches.
+ This preserves the history of both branches but adds an extra commit to show where they joined.
+Run git checkout main and then git merge feature.
+The history will look like this:
+
+A --- B --- C --- F
+           \     /
+            D --- E
+
+git to zip
+git archive master --format=zip - output=../name_of_file.zip
+
+git bundle create ../repo.bundler master
+
+git log 
+git log  --author="name
+git log  --befor="date"
+git log   --oneline
+
+git revert 7af537f - want go back to the "name" comment
+git revert  HEAD - go back to the previous version file comment
+
+
+git config --global user.name - check if user have set to git
+git config  --global merge.tool kdiff3 - tool for git merge conflict
+
+
+
+1. git fetch -מאפשר לנו לראות את השינויים האחרונים שקרו בגיטהאב בלי להכניס את השינויים ללוקלי(אם נרצה להכניס ללוקלי נעשה גיט פול או גיט מרג' למיין
+git fetch downloads changes from a remote repository but does not merge them into your local branch.
+ This allows you to see changes on the remote before deciding whether or not to integrate them.
+
+Use case: You want to see the latest changes on the remote branch without merging them yet.
+Example
+Suppose you have a main branch on your local machine and a remote repository with additional commits:
+
+less
+Copy code
+Local main branch: A --- B --- C
+Remote main branch: A --- B --- C --- D --- E
+When you run git fetch origin, Git retrieves the latest changes from the remote, so you have the following setup:
+
+less
+Copy code
+Local main branch:   A --- B --- C
+Remote main branch:  A --- B --- C --- D --- E
+Your local main branch remains at C, but now you can see D and E on origin/main. If you decide to incorporate these changes, you can run git merge origin/main or git pull.
+
+
+
+git diff: 
+git diff: Compares files and shows differences between versions, allowing you to review changes at different stages.
+git diff main origin/main  -  to compare your local main with the origin/main (remote) branch after fetching, 
+
+Example 2: Check Changes in the Working Directory
+Suppose you’ve modified a file, but haven’t staged it yet:
+
+File example.txt has one line changed from Hello to Hello, World.
+Running git diff will show something like:
+
+Copy code
+- Hello
++ Hello, World
+
+
+------------------------------------------------------------------------------------------------
+
+git conflict
+יש התנגשות בשורה בין הקוד שנימצא בברנץ הלוקלי שאני מפתח לבין הקוד שנמצא ברימוט בגיטהאב למשל אם מישהו אחר פיתח ושינה בשורה של אותו קובץ בקובץ .
+יצרתי ברנץ פיצר שהוא מקבל את כל מה שיש במיין. ושניתי בשורה השניה של הקובץ  dorifile.txt  ל"בסון"
+חזרתי ל MAIN ושם יש לי קובץ dorifile.txt ובשורה השניה של הקובץ שיניתי למשל ל"דורי".
+אם אני ירצה לעשות MERGE זאת אומרת הלכתי למיין ואז עשיתי git merge feature  הוא יראה לי קונפליקט ויבקש ממני לתקן.
+זה נוצר כי בעצם עובדים על קובץ אחד ויש התנגשות לשורה השניה - נצטרך לבחור מה מהם נכון.
+לכן יש כלים שאפשר להעזר בהם
+ואני אני עכשיו בברנץ
+
+לאחר תיקון עם כלי מסוים או דרךגיטאהב נוכל לראות ולבדוק שזה תקין
+git status
+git add dorifile.txt 
+git commit -m "Resolved conflict in dorifile.txt"
+
+
+
+
+
+A Git conflict occurs when Git cannot automatically merge changes because two commits have modified the same part of a file differently. 
+When this happens, Git pauses the merge process to let you manually resolve the conflicting changes.
+
+Example Scenario
+Let’s say two developers, Alice and Bob, are working on the same project.
+
+Alice has a main branch with a file example.txt that contains:
+
+mathematica
+Copy code
+Line 1
+Line 2
+Line 3
+Alice creates a new branch, feature, and edits example.txt to:
+
+mathematica
+Copy code
+Line 1
+Line 2 - changed by Alice
+Line 3
+She then commits and pushes her changes to feature.
+
+Meanwhile, Bob directly modifies example.txt on the main branch to:
+
+mathematica
+Copy code
+Line 1
+Line 2 - changed by Bob
+Line 3
+He commits these changes on main.
+
+Now, if Alice tries to merge feature back into main, Git will detect a conflict because both Alice and Bob modified Line 2 differently. Git can’t automatically decide which version to keep.
+
+How Git Displays a Conflict
+When Alice runs:
+
+bash
+Copy code
+git checkout main
+git merge feature
+Git will stop and show a conflict in example.txt, marking it like this:
+
+plaintext
+Copy code
+Line 1
+<<<<<<< HEAD
+Line 2 - changed by Bob
+=======
+Line 2 - changed by Alice
+>>>>>>> feature
+Line 3
+Here’s what the markers mean:
+
+<<<<<<< HEAD: Start of the section with the current branch’s changes (main).
+=======: Divider between the two conflicting changes.
+>>>>>>> feature: End of the section with the incoming branch’s changes (feature).
+Resolving the Conflict
+Open the conflicting file (example.txt) in a text editor.
+
+Decide how to resolve the conflict:
+
+Choose one version over the other (either Bob’s or Alice’s).
+Combine both changes if they’re compatible.
+For example, if Alice decides to combine both changes, she could edit example.txt to:
+
+plaintext
+Copy code
+Line 1
+Line 2 - changed by Bob and Alice
+Line 3
+Remove the conflict markers (<<<<<<<, =======, >>>>>>>), so the file looks clean.
+
+Stage the resolved file:
+
+bash
+Copy code
+git add example.txt
+Complete the merge by committing:
+
+bash
+Copy code
+git commit -m "Resolved conflict in example.txt"
+
+
+------------------------------------------------------------------------------------------------
+
+git stash -
+git stashing is away of creating a checkpoint for non-comiited changes.
+its saves all the changes to a temporary location so user can perform other tasks such as switching branchess'
+reveting etc.. these changes can then be reapplied elsewhere
+
+אם עשיתי שינויים ועוד לא עידכנתי ואני רוצה לעבור לברנץ אחר אז עם גיט סטש אני יכול לשים את השינויים האלה
+במקום זמני ואז אני יוכל לעבור לברנץ אחר לתקן שם מה שצריך ואז לחזור לברנץ הקודם ולהחזיר את השינויים.
+
+בשביל להכניס את זה לסטש
+git stash
+בשביל להחזיר את השינויים 
+git stash apply
+git stash pop
+
+בשביל לראות
+git stash list
+git show stash -לראות את הסטש הספצפי
+------------------------------------------------------------------------------------------------
+
+
+git rebase
+When you run git rebase main (or git rebase <target branch>), it uses the latest local changes from the main branch by default—not the remote version.
+
+Here’s a breakdown of what happens and how to ensure you're working with the most recent changes from the remote if needed:
+
+1. Local vs. Remote Rebase Behavior
+Local main branch: By default, git rebase main rebases your feature branch onto the most recent commit on your local main branch.
+Remote main branch: If your local main is out of date compared to the remote (e.g., origin/main), you’ll need to update your local branch to reflect the latest changes from the remote.
+Steps to Rebase with the Latest Remote Changes
+Fetch or pull the latest changes from the remote:
+
+bash
+Copy code
+git fetch origin
+or, to update the local main branch with remote changes directly:
+
+bash
+Copy code
+git pull origin main
+Rebase your feature branch onto the updated local main:
+
+bash
+Copy code
+git checkout feature
+git rebase main
+After this, your feature branch will be rebased onto the latest commit from main, incorporating any new changes from the remote repository.
+
+Summary
+git rebase main uses the local version of main by default.
+To use the latest remote changes, first run git fetch or git pull on main to update it, then run git rebase main.
+
+גיט ריבביס מה שהוא עושה הוא מכניס לתוך הפיצר ברנץאת כל השינויים מהנקודה האחרונה של הקומיט במיין הוא ממשיך באופן לניארי את השינוי לפיצר ברנץ
+
+זה במקום לעשות לתוך הפיצר ברנץ מארג למסטר ואז העץ לא יהיה לניארי ויהיו המון קוממיטים
+
+
+
+
+
+
+
+
+Key Differences Between git merge and git rebase
+History Structure
+
+Merge: Keeps a non-linear history by creating a new "merge commit" that connects the two branches. This approach preserves the original context and branching history, showing exactly when the branches diverged and when they rejoined.
+Rebase: Creates a linear history by moving the commits from the feature branch to start on top of the latest commit on the main branch, as if they were developed directly from there. This makes the history look as though it flowed in a single line.
+Commit Size and Count
+
+Merge: Adds an extra commit (the "merge commit") to the branch. If your feature branch has three commits, you’ll end up with four new commits in the history after a merge.
+Rebase: Does not add a new commit; instead, it rewrites the existing commits from the feature branch to apply on top of the main branch. This keeps the commit count the same as it was in the feature branch but rewrites their position in the history.
+Readability and Collaboration
+
+Merge: Provides a detailed, chronological record of exactly when branches split and merged, making it easier to follow complex development paths.
+Rebase: Simplifies history, making it appear as if the feature branch commits were developed in sequence after the main branch's latest commit. This is useful for keeping a clean, straightforward history but can be confusing in a shared branch context since it rewrites commit history.
+Example
+Imagine you have the following setup:
+
+main branch:
+
+css
+Copy code
+A --- B --- C
+feature branch with two new commits D and E:
+
+mathematica
+Copy code
+A --- B --- C
+           \
+            D --- E
+If you merge feature into main:
+
+mathematica
+Copy code
+A --- B --- C --- F
+             \   /
+              D --- E
+F is the merge commit that combines both histories.
+If you rebase feature onto main:
+
+mathematica
+Copy code
+A --- B --- C --- D' --- E'
+D and E are rewritten as D' and E' to appear as if they were based directly off C, creating a single line of commits.
+Summary: Different Use Cases and Implications
+Merge: Keeps the full history, showing exactly where and when branches diverged and merged. This is helpful for preserving context, especially in collaborative projects.
+Rebase: Simplifies the commit history, which is often preferred for feature branches before merging into main, as it makes the history cleaner and more linear.
+End Result: The working directory will end up with the same file contents whether you use merge or rebase, but the commit history will be different.
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+
+
+If you have a new feature branch and want to merge it into main, there are two main options: merging or rebasing. Here’s how to handle it:
+
+1. Merge Your Feature Branch into main
+This is a straightforward approach that keeps the complete history, including a merge commit that shows the feature branch was merged into main.
+
+Steps:
+Switch to main:
+
+bash
+Copy code
+git checkout main
+Update main with the latest changes from the remote repository:
+
+bash
+Copy code
+git pull origin main
+Merge the feature branch into main:
+
+bash
+Copy code
+git merge your-feature-branch
+Push the updated main to the remote:
+
+bash
+Copy code
+git push origin main
+This approach is common and leaves a clear merge record. It’s ideal when you want to preserve a detailed history of your feature branch in main.
+
+2. Rebase the Feature Branch and Fast-Forward Merge
+If you want a cleaner, linear history, you can rebase your feature branch on top of main before merging, which avoids creating a merge commit.
+
+Steps:
+Switch to your feature branch:
+
+bash
+Copy code
+git checkout your-feature-branch
+Rebase onto main:
+
+bash
+Copy code
+git rebase main
+This replays your feature branch’s commits on top of the latest commits from main.
+
+Switch to main and fast-forward merge:
+
+bash
+Copy code
+git checkout main
+git merge --ff-only your-feature-branch
+Push to the remote:
+
+bash
+Copy code
+git push origin main
+This method keeps main history cleaner but rewrites the history of your feature branch, so it’s best to use it if you haven’t shared the feature branch with others.
+
+
+------------------------------------------------------------------------------------------------
+
+אם אני רוצה ליצור ברנץ אבל שהמיין יהיה עדכני
+אז נעשה קודם
+git checkout main
+git pull origin main
+git checkout -b new-feature-branch
+
+
+אם התחלתי לעבוד כבר על הפיצר והיו עדכונים מאז שאני צריך שיכנסו 
+אז או שאני עושה מארג מיין לתוך הפיצר
+git checkout new-feature-branch
+git checkout main
+git pull origin main
+git checkout new-feature-branch
+git merge  main
+
+
+או שאני עושה ריבייס
+git checkout main
+git pull origin main
+git checkout new-feature-branch
+git rebase main
+------------------------------------------------------------------------------------------------
+
+
+
+If you're working on a feature branch and you've added a file (like file.txt), and you want to save this to main along with all the updates that have happened on main in the meantime, you can follow these steps to bring your changes over cleanly:
+
+1. Commit the Changes on Your Feature Branch
+First, make sure all your changes on the feature branch are committed.
+
+bash
+Copy code
+git add file.txt
+git commit -m "Add file.txt with new feature"
+2. Update Your Feature Branch with Changes from main
+Since main may have been updated since you created the feature branch, you’ll want to integrate those changes into your branch.
+
+Option 1: Rebase onto main (Recommended for cleaner history)
+Rebasing places your feature branch commits on top of the latest main commits, which helps maintain a linear history.
+
+Fetch the latest changes from the remote repository:
+
+bash
+Copy code
+git fetch origin
+Rebase your feature branch onto the latest main:
+
+bash
+Copy code
+git rebase origin/main
+If there are any conflicts, resolve them as Git prompts, then continue the rebase:
+bash
+Copy code
+git add <resolved-files>
+git rebase --continue
+Option 2: Merge main into Your Feature Branch
+If you prefer to keep a record of merging main into your feature branch (rather than rewriting history), you can merge instead of rebasing.
+
+Merge the latest changes from main:
+
+bash
+Copy code
+git merge origin/main
+If conflicts arise, resolve them, add the resolved files, and complete the merge:
+
+bash
+Copy code
+git add <resolved-files>
+git commit
+3. Switch to main and Merge Your Feature Branch
+Now that your feature branch includes all the latest changes from main, you can switch to main and merge your feature branch.
+
+Switch to main:
+
+bash
+Copy code
+git checkout main
+Update main with the latest remote changes (if any):
+
+bash
+Copy code
+git pull origin main
+Merge your feature branch into main:
+
+bash
+Copy code
+git merge your-feature-branch
+Push the updated main to the remote repository:
+
+bash
+Copy code
+git push origin main
+This approach ensures that all changes, including file.txt, are now saved to main along with the latest updates from the branch.
+
+
+
+
+
+
+Summary
+For solo work or clean history goals: Rebase is usually the better option.
+For shared work or if preserving a full history is critical: Merge is safer and maintains more context.
+
+
+------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Initialize a Repository
+Command: git init
+Usage: Creates a new Git repository in the current directory.
+
+git init
+2. Clone a Repository
+Command: git clone <repository-url>
+Usage: Clones a remote repository to your local machine.
+
+
+git clone https://github.com/user/repo.git
+3. Check Status
+Command: git status
+Usage: Shows the status of the working directory and staging area, such as untracked files, modified files, and staged files.
+
+
+git status
+4. Add Files to Staging Area
+Command: git add <file> or git add .
+Usage: Stages files for the next commit.
+
+
+git add index.html
+git add .  # Stages all changes
+5. Commit Changes
+Command: git commit -m "<commit message>"
+Usage: Commits the staged changes with a message describing the changes.
+
+
+git commit -m "Add new feature to project"
+6. View Commit History
+Command: git log
+Usage: Shows the commit history in the repository.
+
+
+git log
+git log --oneline  # Summarized, one-line log
+7. Push Changes to Remote Repository
+Command: git push <remote> <branch>
+Usage: Pushes commits from your local repository to the remote branch.
+
+
+git push origin main
+8. Pull Changes from Remote Repository
+Command: git pull <remote> <branch>
+Usage: Fetches and merges changes from a remote branch into the current branch.
+
+
+git pull origin main
+9. Fetch Updates from Remote without Merging
+Command: git fetch <remote>
+Usage: Downloads changes from the remote repository without merging them.
+
+
+git fetch origin
+10. Create a New Branch
+Command: git branch <branch-name>
+Usage: Creates a new branch.
+
+
+git branch feature-branch
+11. Switch to Another Branch
+Command: git checkout <branch-name> or git switch <branch-name>
+Usage: Switches to the specified branch.
+
+
+git checkout feature-branch
+git switch main
+12. Create and Switch to a New Branch
+Command: git checkout -b <branch-name>
+Usage: Creates a new branch and checks it out in one step.
+
+
+git checkout -b new-feature
+13. Merge Branches
+Command: git merge <branch-name>
+Usage: Merges the specified branch into the current branch.
+
+
+git checkout main
+git merge feature-branch
+14. Rebase Branch
+Command: git rebase <base-branch>
+Usage: Moves the branch to start from the latest commit in the specified base branch, creating a linear history.
+
+
+git checkout feature-branch
+git rebase main
+15. Resolve Merge Conflicts
+Commands: Edit files, then git add and git commit.
+Usage: When conflicts occur, open the files, edit them to resolve conflicts, stage the changes, and commit.
+
+
+# Edit conflicting files to resolve conflicts
+git add resolved-file.txt
+git commit -m "Resolve merge conflicts"
+16. Stash Changes
+Command: git stash
+Usage: Temporarily saves uncommitted changes for later use.
+
+
+git stash  # Saves changes
+git stash pop  # Reapplies stashed changes
+17. View Differences Between Commits
+Command: git diff <commit> or git diff <branch1> <branch2>
+Usage: Shows the differences between your working directory and a specific commit, or between branches.
+
+
+git diff HEAD  # Compare with latest commit
+git diff main feature-branch  # Compare two branches
+18. Undo Last Commit
+Command: git reset --soft HEAD~1 or git reset --hard HEAD~1
+Usage: Undoes the last commit, either keeping the changes in the staging area (--soft) or discarding them (--hard).
+
+
+git reset --soft HEAD~1  # Keeps changes
+git reset --hard HEAD~1  # Discards changes
+19. Delete a Branch
+Command: git branch -d <branch-name> (local) or git push origin --delete <branch-name> (remote)
+Usage: Deletes a branch locally or remotely.
+
+
+git branch -d feature-branch  # Delete local branch
+git push origin --delete feature-branch  # Delete remote branch
+20. Tag a Commit
+Command: git tag <tag-name>
+Usage: Creates a tag, which is a marker for a specific commit (often for releases).
+
+
+git tag v1.0.0
+git push origin v1.0.0  # Push tag to remote

@@ -1,0 +1,243 @@
+To implement pagination with a good structure in React TypeScript using React Query and SCSS, where we have 100 items with 20 items per page, we can break down the setup as follows:
+
+API Client and Service Layer: Use Axios to call a paginated endpoint.
+Custom React Query Hook: Use React Query to handle the pagination, fetching based on the current page and limit.
+Pagination Component: Display paginated items and numbered pagination buttons.
+SCSS Styling: Style the pagination component and buttons for a user-friendly interface.
+Project Structure
+plaintext
+Copy code
+src/
+├── api/
+│   ├── apiClient.ts
+│   └── itemService.ts
+├── components/
+│   └── ItemList.tsx
+├── hooks/
+│   └── usePaginatedItems.ts
+├── types/
+│   └── Item.ts
+├── styles/
+│   ├── ItemList.scss
+│   └── Pagination.scss
+└── App.tsx
+1. API Setup
+Set up an API client and a function to fetch paginated data.
+
+src/api/apiClient.ts
+typescript
+Copy code
+import axios from 'axios';
+
+const apiClient = axios.create({
+  baseURL: 'https://your-api.com/api',
+  headers: { 'Content-Type': 'application/json' },
+});
+
+export default apiClient;
+src/api/itemService.ts
+This function fetches paginated items from the API and takes page and limit parameters.
+
+typescript
+Copy code
+import apiClient from './apiClient';
+
+export const fetchItems = async (page: number, limit: number) => {
+  const response = await apiClient.get('/items', { params: { page, limit } });
+  return response.data;
+};
+2. Define TypeScript Types
+Define types for our API response.
+
+src/types/Item.ts
+typescript
+Copy code
+export interface Item {
+  id: number;
+  name: string;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  page: number;
+  totalItems: number;
+  totalPages: number;
+}
+3. React Query Hook
+Create a custom hook that handles pagination logic using React Query.
+
+src/hooks/usePaginatedItems.ts
+typescript
+Copy code
+import { useQuery } from '@tanstack/react-query';
+import { fetchItems } from '../api/itemService';
+import { PaginatedResponse, Item } from '../types/Item';
+
+export const usePaginatedItems = (page: number, limit: number) => {
+  return useQuery<PaginatedResponse<Item>>(['items', page], () => fetchItems(page, limit), {
+    keepPreviousData: true,
+  });
+};
+4. Pagination Component
+This component uses usePaginatedItems to display items and generates numbered pagination buttons.
+
+src/components/ItemList.tsx
+typescript
+Copy code
+import React, { useState } from 'react';
+import { usePaginatedItems } from '../hooks/usePaginatedItems';
+import '../styles/ItemList.scss';
+import '../styles/Pagination.scss';
+
+const ItemList: React.FC = () => {
+  const [page, setPage] = useState(1);
+  const limit = 20; // 20 items per page
+
+  const { data, isLoading, isError } = usePaginatedItems(page, limit);
+
+  const totalPages = data?.totalPages || 1;
+
+  const handlePageClick = (pageNumber: number) => {
+    setPage(pageNumber);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading items</div>;
+
+  return (
+    <div className="item-list">
+      <ul>
+        {data?.data.map((item) => (
+          <li key={item.id} className="item">
+            {item.name}
+          </li>
+        ))}
+      </ul>
+      <div className="pagination">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageClick(index + 1)}
+            className={`pagination-button ${page === index + 1 ? 'active' : ''}`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ItemList;
+5. Styling with SCSS
+src/styles/ItemList.scss
+Style the list of items:
+
+scss
+Copy code
+.item-list {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+
+  .item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+src/styles/Pagination.scss
+Style pagination buttons:
+
+scss
+Copy code
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  .pagination-button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &.active {
+      background-color: #0056b3;
+    }
+
+    &:hover {
+      background-color: #0056b3;
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+6. Main App Component
+Add ItemList to your main app component.
+
+src/App.tsx
+typescript
+Copy code
+import React from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ItemList from './components/ItemList';
+
+const queryClient = new QueryClient();
+
+const App: React.FC = () => (
+  <QueryClientProvider client={queryClient}>
+    <div className="App">
+      <h1>Paginated Item List</h1>
+      <ItemList />
+    </div>
+  </QueryClientProvider>
+);
+
+export default App;
+7. Optional: Global SCSS Setup
+If you want global styling, set it up in src/styles/global.scss and import it in index.tsx.
+
+src/styles/global.scss
+scss
+Copy code
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.App {
+  text-align: center;
+  padding: 20px;
+}
+src/index.tsx
+typescript
+Copy code
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './styles/global.scss';
+import App from './App';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(<App />);
+Summary
+API Layer: Set up Axios with an API function to fetch paginated data.
+Custom Hook: Use React Query for fetching and caching paginated data.
+Pagination Component: Display items and page buttons to navigate.
+Styling: Use SCSS for styling items and pagination buttons.
+
+
+
+
+
+
