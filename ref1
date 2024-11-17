@@ -1,0 +1,183 @@
+//Example with ref and state
+import React, { useEffect, useRef,useState } from 'react';
+import './style.css';
+
+const App = () => {
+  const timerRef = useRef(0); // מאחסן את ערך הטיימר
+  const timerElementRef = useRef(null); // הפניה לאלמנט ה-DOM שמציג את הטיימר
+  const [isRunning, setIsRunning] = useState(true); // מצב הטיימר: רץ או עוצר
+  const intervalRef = useRef(null); // הפניה ל-interval כדי לעצור אותו אם צריך
+
+  // אתחול טיימר ושמירה על העדכון כל שנייה
+  useEffect(() => {
+    if (isRunning) {
+      intervalRef.current = setInterval(() => {
+        timerRef.current += 1; // עדכון ערך הטיימר
+
+        // עדכון ישיר של ה-DOM
+        if (timerElementRef.current) {
+          timerElementRef.current.textContent = timerRef.current.toString();
+        }
+      }, 1000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current); // עצירת הטיימר
+      }
+    }
+
+    // ניקוי ה-interval על סיום הקומפוננטה או עצירה
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isRunning]); // ריצה מחדש רק כשמצב ה-isRunning משתנה
+
+  // פונקציה להפסיק/להתחיל את הטיימר
+  const toggleTimer = () => {
+    setIsRunning((prev) => !prev); // מחליף בין מצב רץ לעוצר
+  };
+
+  // פונקציה לאפס את הטיימר
+  const resetTimer = () => {
+    timerRef.current = 0; // מאפס את הערך
+    if (timerElementRef.current) {
+      timerElementRef.current.textContent = "0"; // מעדכן את ה-DOM
+    }
+  };
+
+  return (
+    <div className="container">
+      <div className="box">
+        <div className="circle">
+          <span ref={timerElementRef} className="timer">0</span>
+        </div>
+        <div className="buttons">
+          <button onClick={toggleTimer} className="button button-yellow">
+            {isRunning ? "הפסק טיימר" : "המשך טיימר"}
+          </button>
+          <button onClick={resetTimer} className="button button-red">
+            אפס טיימר
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+
+
+
+
+
+
+//------------------------------------------------------//
+//Example with ref 
+
+// const App = () => {
+//   const timerRef = useRef(0); // מאחסן את ערך הטיימר
+//   const timerElementRef = useRef(null); // הפניה לאלמנט ה-DOM שמציג את הטיימר
+//   const intervalRef = useRef(null); // הפניה ל-interval כדי לשלוט בו
+//   const isRunningRef = useRef(true); // הפניה למצב הטיימר (רץ או עוצר)
+
+//   // אתחול טיימר ושמירה על העדכון כל שנייה
+//   useEffect(() => {
+//     if (isRunningRef.current) {
+//       intervalRef.current = setInterval(() => {
+//         timerRef.current += 1; // עדכון ערך הטיימר
+
+//         // עדכון ישיר של ה-DOM
+//         if (timerElementRef.current) {
+//           timerElementRef.current.textContent = timerRef.current.toString();
+//         }
+//       }, 1000);
+//     }
+
+//     // ניקוי ה-interval על סיום הקומפוננטה או עצירה
+//     return () => {
+//       if (intervalRef.current) {
+//         clearInterval(intervalRef.current);
+//       }
+//     };
+//   }, []); // רץ פעם אחת בהתחלה כדי להפעיל את הטיימר
+
+//   // פונקציה להפסיק/להתחיל את הטיימר
+//   const toggleTimer = () => {
+//     if (isRunningRef.current) {
+//       if (intervalRef.current) {
+//         clearInterval(intervalRef.current); // עצירת הטיימר
+//       }
+//     } else {
+//       intervalRef.current = setInterval(() => {
+//         timerRef.current += 1; // עדכון ערך הטיימר
+
+//         // עדכון ישיר של ה-DOM
+//         if (timerElementRef.current) {
+//           timerElementRef.current.textContent = timerRef.current.toString();
+//         }
+//       }, 1000);
+//     }
+//     isRunningRef.current = !isRunningRef.current; // עדכון מצב הטיימר
+//   };
+
+//   // פונקציה לאפס את הטיימר
+//   const resetTimer = () => {
+//     timerRef.current = 0; // מאפס את הערך
+//     if (timerElementRef.current) {
+//       timerElementRef.current.textContent = "0"; // מעדכן את ה-DOM
+//     }
+//   };
+
+//   return (
+//     <div className="container">
+//       <div className="box">
+//         <div className="circle">
+//           <span ref={timerElementRef} className="timer">0</span>
+//         </div>
+//         <div className="buttons">
+//           <button onClick={toggleTimer} className="button button-yellow">
+//             {isRunningRef.current ? "הפסק טיימר" : "המשך טיימר"}
+//           </button>
+//           <button onClick={resetTimer} className="button button-red">
+//             אפס טיימר
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default App;
+
+  
+//------------------------------------------------------//
+
+//Example with state
+// import React,{useEffect,useState} from "react";
+// import "./style.css";
+
+// export default function App() {
+
+//   const [timer,setTimer] = useState(0);
+
+// useEffect(()=>{
+// let timer = setInterval(()=>
+//  setTimer((prv) => prv+1),1000)
+
+// return ()=>{
+//   clearInterval(timer)
+// }
+// },[])
+//   return (
+//     <div>
+//       <div className="container">
+//         <div className="circle"><span>{timer}</span></div>
+//         <div className="button">
+//         <button className="btn1"> Resume</button>
+//         <button className="btn2"> Reset</button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
