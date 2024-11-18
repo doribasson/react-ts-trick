@@ -1,0 +1,12 @@
+Get-ChildItem -Recurse -Directory -Filter "dori" | Remove-Item -Recurse -Force                ---- powershell delete all folder with name dori
+
+
+
+for /d /r %i in (dori) do rd /s /q "%i"                      --------------- cmd delete all folder with name dori
+
+
+
+To delete all folders named dori in the current directory and all subdirectories using a terminal (on Linux or macOS), you can use the following command:
+bash
+Copy code
+find . -type d -name "dori" -exec rm -rf {} +
