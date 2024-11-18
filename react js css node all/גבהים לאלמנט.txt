@@ -1,0 +1,58 @@
+גבהים לאלמנט
+innerHeight:
+הגובה של החלון של כל דף ה html.
+outerHeight:
+הגובה של כל חלון של הבראוזר. ממש כל החלון.
+
+innerWidth:
+הרוחב של כל דף ה html
+
+outerWidth:
+הרוחב של כל החלון של הבראוזר.
+
+clientHeight:
+האורך גובה של האלמנט מתחילת הסקרול בר עד סופו.
+
+clientWidth:
+הרוחב של האלמנט לא כולל הסקרול בר.
+
+offsetTop:
+מהאבא הכי למעלה  עד תחילת הדיב האורך/גובה.
+
+offsetLeft:
+משמאל העמוד הרוחב עד תחילת הדיב.
+
+
+elem.getBoundingClientRect():
+מקבל נתונים על האלמנט
+let coords = elem.getBoundingClientRect(); message.style.left = coords.left + "px"; message.style.top = coords.bottom + "px"; 
+
+תחילת העמוד מתחיל ממספר שלילי גדול. וכשגוללים המספר גדל לחיובי.
+window.pageYOffset 
+שקול ל window.scrollTop
+
+אז אם נרצה לחשב מרחק בין תחילת העמוד לאלמנט מסוים:
+var elDistanceToTop = window.pageYOffset + el.getBoundingClientRect().top
+התחלנו בתחילת העמוד שהוא במינוס למשל 400- והוספנו את הגובה עד לאלמנט שבחרנו למשמל 300. זאת אומרת שעכשיו
+אנחנו בגובה 100- שזה תחילת האלמנט שלנו. ואז נוכל לעשות   scrollTo לגובה..
+
+אם נרצה לגלול למקום מסוים נצטרך להבין  שהגלילה היא מתחילת הדף ואם יש שם header אז החישוב של הגלילה צריכה להיות בהתאם.
+אפשר:
+var node = 'select your element'; var yourHeight = 'height of your fixed header'; // scroll to your element node.scrollIntoView(true); // now account for fixed header var scrolledY = window.scrollY; if(scrolledY){ window.scroll(0, scrolledY - yourHeight); }
+
+
+
+
+The following code yields a smooth scroll to the top of the element with an offset for fixed header:
+
+var topOfElement = document.querySelector('#targetElement').offsetTop - XX; window.scroll({ top: topOfElement, behavior: "smooth" });
+
+או
+
+scroll-margin-top: $header-height;
+
+For modern browsers: set the scroll-margin-top css property to the desired top offset, on elements that you're linking/scrolling to. (it should probably have been called scroll-offset-top.)
+
+למשל עם ה header של הגובה 100px אז נעשה שהגלילה תתחיל ממרגין 100 סא אחרי ה header
+
+* { scroll-margin-top: 100px; }

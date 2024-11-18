@@ -1,0 +1,30 @@
+לסכום איברים ממערך לאובייקט
+
+const arrList =[[1,4,8,11,8,4],[11,2,6,9,1,1,8],5,6,1];
+
+console.log(arrList);
+console.log("----------------")
+
+const temp = [].concat.apply([],arrList);
+
+console.log(temp);
+console.log("---------------")
+
+let obj = {};
+
+arrList.forEach((item => {
+    if(Array.isArray(item)){
+        item.forEach(num=>{
+           obj[num] = obj[num]+1 || 1;
+        })
+    }
+    else obj[item] = obj[item]+1 || 1;
+}))
+
+console.log(obj);
+
+[ [ 1, 4, 8, 11, 8, 4 ], [ 11, 2, 6, 9, 1, 1, 8 ], 5, 6, 1 ]
+----------------
+[ 1, 4, 8, 11, 8, 4, 11, 2, 6, 9, 1, 1, 8, 5, 6, 1 ]
+---------------
+{ '1': 4, '2': 1, '4': 2, '5': 1, '6': 2, '8': 3, '9': 1, '11': 2 }

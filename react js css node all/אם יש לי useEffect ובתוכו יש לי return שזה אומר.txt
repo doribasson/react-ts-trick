@@ -1,0 +1,25 @@
+אם יש לי useEffect ובתוכו יש לי return שזה אומר שני דברים. ברגע שאני יוצא מהקומפוננטה וכל פעם שאני נכנס שוב ל useEffect(ברגע של עדכון של סטייט או פרופ בדפנדסי) אז קודם מה שמתבצע זה ה return ורק אחרי זה השאר מה שבתוך ה useEffect.
+
+בכניסה לקומפוננטה היוזאפקט עובד ללא ה return. 
+ביציאה מהקומפוננטה רק ה return עובד בתוך היוזאפקט.
+בעדכון סטייט או פרופ בתוך הדפנדסי של היוזאפקט קודם מתבצע ה return ביוזאפקט ואז כל השאר ביוזאפקט.
+
+mport "./styles.css";
+import { useEffect, useState } from 'react';
+
+ default function App() {
+  const [num, setNum] = useState(1);
+  useEffect(()=>{
+    console.log(num);
+    return ()=> console.log('zz');
+  },[num])
+  return (
+    <div className="App">
+      <h1>Hello CodeSandbox</h1>
+  <button onClick={()=> setNum(prev => prev+1)}> click </button>
+      <h2>{num}</h2>
+    </div>
+  );
+}
+
+בכניסה הראשונית לקומפוננטה קורה ה useEffect בלי ה return. ברגע שיוצאים מהקומפוננטה קורה רק מה שיש ב return. וברגע שיש עדכון של סטייט או פרופ קורה קודם ה return ורק אחרי זה כל השאר שיש ב useEffect.

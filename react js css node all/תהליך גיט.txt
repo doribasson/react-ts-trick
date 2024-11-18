@@ -1,0 +1,161 @@
+תהליך גיט
+
+עושה clone לפרויקט קיים וזה מביא לי את כל הפרויקט ללוקלי על המחשב.
+
+יוצר branch ונכנס אליו  ואז עובד על פיצר שאני רוצה להוסיף או לשנות.
+לאחר מכאן עושה git add  ואז git commit שזה השינויים והעדכון שעשיתי בלוקלי אצלי. לבסוף עושה git push ואז הוא מכניס את הפרויקט לרימוט לגיט בענן שכולם יוכלו לראות.
+לבסוף אמורים לבדוק QA  ואז לעשות git merge 
+
+נילך למסטר עם git checkout master ואז נעשה git pull וזה יעדכן לי את כל הלוקלי שלי(מהעדכון האחרון מהשרת בגיט שאנשים מעדכנים).
+ואז נפתח branch ונכנס אליו ישירות עם הפקודה 
+Git checkout -b branchName
+לאחר הפיצר שיצרנו בבראנצ אני עושה
+על + על כל קובץ שאני רוצה שיתעדכן.(נעשה + בעצם רק לקבצים הספציפים שיצרתי בלי כל השאר שזה הסביבה וגם לא נעשה  . git add כי זה יעדכן את הכל )  
+לאחר מכן נלחץ על ה- V ונרשום commit שם להערה.
+לבסוף נעלה את הבראנצ מה שעשינו לשרת עם הפקודה git push
+
+
+כל הקטע של הגיט בראנץ זה בעצם לעשות קופי לפרויקט של המסטר ואז לעבוד על הפיצר מהקופי לוקלית על המחשב ורק בסוף לעלות לשרת רק את הפיצר. עובדים לוקלית ואז בסוף מעלים לסטייגינג ואם הכל טוב ומאושר רק אז מעלים לפרודקשין.
+
+Git stash
+מוציא מהברנאץ את כל השינויים שעשיתי ושם אותם באוגר.
+ואז אני יכול לעשות merge עם בראנץ אחר בלי שידרוס לי את שינויים וזה כי שמתי אותם ב stash. לאחר מכאן אחרי ה merge שהברנאץ שלי עשה והתמזג אני מחזיר מהstash את השינויים שלי על ידי git stash pop. ועעכשיו הסרנאץ שלי מעודכן כולל בראנץ אחר וכולל השינויים שאני עשיתי בלי שידרוס לי אותם.
+
+
+עושים clone ואז בעצם מקבלים ריפוזיטורי עדכני שזה המסטר שכולם עובדים עליו. נעשה גיט פול לקבל את כל העדכונים שאנשים אחרים עושים. לאחר מכאן נפתח בראנץ ונעבוד על הפיצר הספציפי שלי ועושה קומיטים בין כל קטעי שינויים. לאחר שסיימתי אני עושה push. לאחר מכאן אני הולך שוב למסטר ועושה git pull ומקבל את כל העדכונים. יש עכשיו שתי אופציות או לפתוח בראנץ חדש מהמסטר ואז לעשות git merege myfeatrure זא לעשות מיזוג עם הפיצר שבניתי. ואז ככה אני לא משנה את הבראנץ של הפיצר שלי אלא משנה רק את הברנץ של הגיבוי.
+אופציה שניה היא פשוט ללכת למסטר לעשות git pull לקבל את השינויים של המפתחים האחרים ואז ללכת לברנאץ של הפיצר שעשיתי ולעשות merge למסטר.
+
+אחראי צוות - למזג את הפיצר למסטר.  נילך למסטר ואז נעשה git merge branchname הבראנץניים זה הפיצר.
+אופציה שניה זה דרך הגיטהאב שם אני הולך הולך לפולריקווסט יוצר פולריקווסט של הפיצר ואז לוחץ על merge pull request ואז confirm merge
+
+ יכול להיות קונפליקט כי מפתח אחר יכול לרשום באותו קומפוננטה באותו שורה שאני רשמתי(כי עדיין לא היה git pull במסטר אז לא רואים את השינוי)
+
+גיטהאב משותף עם חברי הצוות- יש חשבון גיטהאב של החברה ובו אפשר להוסיף כמה יוזרים. כל יוזר זה חבר לצוות. אני בתוך חבר צוות נכנס לחשבון גיטהאב עם היוזר שקיבלתי מהחברה.
+יש בגיטהאב בהגדרות collaboration שיתוף ואז נבחר את היוזר שנרצה.
+https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-teams-and-people-with-access-to-your-repository
+
+Git reset --hard
+מחזיר אותם למצב ההתחלה ומוציא את כל השינויים שעשינו.
+
+
+See What Branch You're On
+
+Run this command:
+
+git status
+
+List All Branches
+
+NOTE: The current local branch will be marked with an asterisk (*).
+
+To see local branches, run this command:
+
+git branch
+
+To see remote branches, run this command:
+
+git branch -r
+
+To see all local and remote branches, run this command:
+
+git branch -a
+
+Create a New Branch
+
+Run this command (replacing my-branch-name with whatever name you want):
+
+git checkout -b my-branch-name
+
+You're now ready to commit to this branch.
+
+Switch to a Branch In Your Local Repo
+
+Run this command:
+
+git checkout my-branch-name
+
+Switch to a Branch That Came From a Remote Repo
+
+To get a list of all branches from the remote, run this command:
+
+git pull
+
+Run this command to switch to the branch:
+
+git checkout --track origin/my-branch-name
+
+Push to a Branch
+
+If your local branch does not exist on the remote, run either of these commands:
+
+git push -u origin my-branch-name
+
+git push -u origin HEAD
+
+NOTE: HEAD is a reference to the top of the current branch, so it's an easy way to push to a branch of the same name on the remote. This saves you from having to type out the exact name of the branch!
+
+If your local branch already exists on the remote, run this command:
+
+git push
+
+Merge a Branch
+
+You'll want to make sure your working tree is clean and see what branch you're on. Run this command:
+
+git status
+
+First, you must check out the branch that you want to merge another branch into (changes will be merged into this branch). If you're not already on the desired branch, run this command:
+
+git checkout master
+
+NOTE: Replace master with another branch name as needed.
+
+Now you can merge another branch into the current branch. Run this command:
+
+git merge my-branch-name
+
+NOTE: When you merge, there may be a conflict. Refer to Handling Merge Conflicts (the next exercise) to learn what to do.
+
+Delete Branches
+
+To delete a remote branch, run this command:
+
+git push origin --delete my-branch-name
+
+To delete a local branch, run either of these commands:
+
+git branch -d my-branch-name
+
+git branch -D my-branch-name
+
+NOTE: The -d option only deletes the branch if it has already been merged. The -D option is a shortcut for --delete --force, which deletes the branch irrespective of its merged status.
+
+Git log --oneline --graph
+
+Git reflog
+מראה לי את כל הרפרנס של הקומיטים שאפשר לחזור אליהם.
+git reset HEAD@{1}
+
+הHEAD מציין לאיזה קומיט אני רוצה לעבור ולהצביע עליו אז פה על קומיט הד 1 יש מלא בreflog.
+
+Git reset --soft HEAD^
+מחזיר אותנו לקומיט אחד לפני והסופט מציין שישמור לי גם את השינויים שהיו לי שם. אם זה --hard אז יחזיר אותי לקומיט אחד לפני למצב ההתחלה ללא השינויים.
+
+Git revert "commit id"
+
+יוצר העתק של הקומיט שאני נותן לו ויכול לעבוד עליו.
+
+Git revert -n "עובד"
+
+
+גם מכניס את כל השינויים לסטייג וגם נותן הערה קומיט. משלב גם add וגם commit
+git commit -am "add . and commit"
+
+אם אני רוצה לתקן קומיט למשל אם בטעות שכחתי להוסיף קובץ לסטייג אז נוסיף ואז נעשה 
+git commit --amend "the new"
+
+
+אם אני רוצה למזג ברנץ b לברנץ שאני נמצא בו למשל a ולאחד את כל הקומיטים שהגיעו מברנץ b. ככה שבברנץ a יהיה קומיט אחד ולא כל הקומיטים שבאו מ b.
+  
+git merge --squash b
+

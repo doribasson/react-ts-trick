@@ -1,0 +1,91 @@
+ריאקט העברת כל הקומפוננטה
+
+או שאני מעביר כפרופס את כל הקומפוננטה {</SomeComp>} ואז מקבל אותה בקומפונטטה אחרת כמשתנה
+{somComp}
+
+או שאני יכול לעטוף את כל הקומפוננטה.
+וזה בסוף הקומפוננטה באקספורט.
+export default wrapHOC(App);
+העמבנו את כל קומפוננטה APP לתוך wrapHOC. 
+ונקבל אותה ככה:
+const wrapHOC=wrappedComp=> (
+<div>
+<wrappedComp />
+<div>
+)
+
+או שאפשר לעשות
+<SomeComp name={myState}>
+All the div ..jsx
+</SomeComp>
+
+ואז בקומפוננטה של SomeComp אפשר עם 
+const const SomeComp=({children}) => (
+<div>
+{children}
+<div>
+)
+
+ויתן לי את כל מה שהיה בין SomeComp
+
+
+
+
+3 דרכים לעשות reuse לקומפוננטות.
+1)יוז הוקס - 
+const [inc, dec]= useCount();
+ילך לפונקציה יוזקאונט יעשה את כל הלוגיקה עם יוזסטייט ופונקציות של אינקממט ודיקרממט ויחזיר לי את מה שאני ירצה ובסוף הפונקציה נחזיר
+ return[increment,decrement]
+ וזה ישים בתוך האינק והדק.
+
+2)עם רנדר פרופס - נוכל לעשות
+render=({props}=>)
+
+const MouseTracker = () => {
+ return ( 
+<div> 
+<h1>Move the mouse around!</h1> 
+<Mouse render={(mouse) => 
+<Cat mouse={mouse} />} 
+ </div>
+ ); };
+
+
+function Renderer(props) {
+ return ( 
+props.children()
+ );
+ }
+ function App() { 
+return ( 
+<div className="App"> 
+<Renderer>
+ {() => { 
+return ( 
+<h1>I am being rendered by Renderer
+</h1> 
+); 
+}} 
+</Renderer> 
+</div>
+ ); }
+
+3) הוק hoc עוטף הקומפוננטה עם קומפוננטה אחרת וככה יכול להוסיף לה דברים.
+
+function Renderer(Wrapped) { 
+return function New(props) { 
+return <Wrapped {...props} /> } }
+
+ function Child(props) { 
+return ( 
+<h1>Hello {props.name}</h1>
+ ); } 
+
+function App() {
+ const C = Renderer(Child) 
+return ( 
+<div className="App"> 
+<C name="john" />
+ </div>
+ ); } 
+

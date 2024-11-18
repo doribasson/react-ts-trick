@@ -1,0 +1,59 @@
+ההבדל בין
+ arrow function to regular function
+זה קצר ו"נקי" יותר, אבל צריך לזכור גם שהיא אנונימית ו"מאבדת" את ה this.
+ arrow functions ב
+מקבלות את ה this של ההורה שלהם, כלומר אם יצרת פונקציית arrow בתוך מתודה של אובייקט אתה תוכל להשתמש ב this כאילו זו מתודה של האובייקט.
+לנושא, דרך משתנה אין Hoisting
+
+No matter how or where being executed, this value inside of an arrow function always equals this value from the outer function. In other words, the arrow function resolves this lexically.
+
+הכוונה שאם יש לי פונקציה ובתוכה יש לי callback שזה נניח פונקציית חץ אז בעצם ה this מתיחס תמיד לערך של הפונקציה החיצונית שלו שזה הרמה שמעליו.  כי אין לו this אז הולך לרמה שמעליו.
+
+const myObject = { 
+myMethod(items) {
+ console.log(this); // logs myObject const callback = () => {
+ console.log(this); // logs myObject
+ }; 
+items.forEach(callback);
+ } }; 
+myObject.myMethod([1, 2, 3]); 
+
+נוסף לשינוי צורת הכתיבה של Arrow Functions מפונקציות אנונימיות רגילות, ישנו שינוי התנהגות משמעותי.
+
+ב- JavaScript, הערך של this משתנה בהתאם למקום ממנו הוא נקרא ובצורה בה הוא נקרא (מידע נוסף על כך תוכלו למצוא כאן).
+עד כה, כאשר היינו יוצרים פונקציות, הפונקציה שנוצרה הייתה יוצרת תחום (this) חדש, ומבדילה את עצמה מהתחום ממנו נקראה. לדוגמה:
+
+function Counter() { 
+this.seconds = 0; setInterval(function() { 
+// New anonymous function this.seconds++; // What's seconds? 
+console.log(this.seconds); // NaN }, 1000); } var myCounter = new Counter();
+
+Arrow Functions, לעומת זאת,
+ אינם מבדילים את עצמם מהתחום בו הם נמצאים ואינם יוצרים ערך
+ this חדש.
+כתוצאה מכך, אין צורך יותר לחשוב על מה יהיה הערך של this כשנשתמש בפונקציה, ואפשר לכתוב פונקציות כמו שהיינו כותבים משפטי if-else או switch מבלי לחשוש על ערך ה- this בתוכם.
+
+function Counter() {
+ this.seconds = 0; 
+setInterval(() => { 
+// New anonymous function this.seconds++; console.log(this.seconds); // 1.. 2.. 3.. }, 1000);
+ } 
+var myCounter = new Counter();
+
+Arrow Functions
+ חוסכים המון כאב ראש כשזה מגיע לקריאת קוד והתמודדות עם this, אך הן לא מתאימות לכל מקרה - מאחר שהן פונקציות ללא שם (אנונימיות), לא ניתן להשתמש בהן שוב לאחר כתיבתן, ולא ניתן לבצע איתן פעולות רקורסיביות.
+
+לכן, אני ממליץ להשתמש ב- Arrow Functions רק כאשר הפונקציה מכילה ביטוי אחד ומחזירה ערך כלשהוא, או כאשר אנו רוצים לשמור על ערך ה- this של התחום בו אנו נמצאים
+
+
+ההבדל בין רגולר פנקשין שזה דקלרישו לבין פונקציית אקשספרשין
+// Function declaration 
+function greet(who) {
+ return `Hello, ${who}!`;
+ }
+
+// Function expression
+ const greet = function(who) {
+ return `Hello, ${who}`;
+ }
+

@@ -1,0 +1,61 @@
+תוספים וקיצורים לויזואל סטודיו
+Eslint - import @ root
+Pikok - vsc color backgroung
+Es6/7-
+Axios - fetch
+Tailwind - inline css
+Prettier- font color
+
+
+מעבר בין טאבים בויזואל סטודיו קוד
+Ctrl+tab
+Ctrl +page up / page dn
+Ctrl+1 /2/3
+
+לעלות או להוריד שורת קוד
+Alt+up/down
+שכפול שורה שלמה
+Alt+shift+up / dn
+
+חיפוש והחלפה
+Ctrl+h
+פתיחת טרמינל
+Ctrl+`
+
+יצירת טרימנל חדש
+Ctrl+shift+`
+לעבור לטרמינל אחר
+Ctrl+ (1-9)
+פתיחה וסגירה של sidebar
+Ctrl+b
+סגירה ויצאת מטאב מקובץ
+Ctrl+w
+פתיחת קובץ בטאב
+Ctrl+o
+ללכת לשורה מסוימת
+Ctrl+g
+
+מסך מלא
+F11
+
+יצירת תיקייה חדשה
+Mkdir newfolder
+מחיקה תיקייה חדשה
+rm -r foldername
+יצירת קובץ 
+Ctrl+n, 
+Touch filename.txt
+
+מחיקת קובץ
+Shift+delete
+Shift+cmd+delete
+
+כניסה לאוסף פקודות
+Ctrl+shift+p
+
+חלון ויזואל סטודיו חדש
+Ctrl+shift+n
+
+
+מציג בסיידבר אופציות לתיקייה או קובץ
+Ctrl+shift+e

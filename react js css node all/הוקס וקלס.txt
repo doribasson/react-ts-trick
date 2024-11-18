@@ -1,0 +1,72 @@
+הוקס וקלס
+למה עדיף הוקס על קלס ?
+קריא יותר. קצר יותר מבחינת קוד.
+קל לעשות בו שימוש חוזר.
+קל לנתק אותו מלוגיקה.
+קל להשתמש ולשנות סטייט דרך יוזסטייט.
+הוק עובד מאחורי הקלעים דרך context שזה משהו שכבר בתוך ריאקט. זה אומר שאפשר ליצור קונטקסט ולמנוע את העברות של הפרופ מכל קומפוננטה.
+יש דברים שקשה להבין את הבעיה שלהם מאחורי הקלעים בקלס בלייף סייקל. יש לנו בהוקס כל מני פונקציות שנוכל לעבוד איתם מבחינת ביצועים כמו יוז ממו, ריאקט ממו, יוז קולבק. ריאקט לייזי - שזה לטעון רכיבים על פי פיצולי קוד ככה שהחבילה תוכל  להתפצל לצנקים קטנים חבילות קטנות ושההבילה החשובה תהיה ראשונה ושאר החבילות יהיו אחריה  ולרנדר רק מה שאנחנו רוצים.
+
+בריאקט קלס אם אני לא צריך סטייט או איבנט אנדלר כמו למשל אונקליק או צ`יננג` אז אני יכול לוותר על הקלס ופשוט להשתמש בפנקשין קומפוננט.
+
+הקונסטרקטור קורה לפני המאונטינג זאת אומר הדבר הראשון והוא משמש לאתחול סטייטים לביינד של האיבנט אנדלר והוא יורש  עם super  ובתוכו פרופ את React.componet.
+ואז רק קורה componentwillmount ו componentdidmount ז"א אחרי ה מאונטיננג.
+הסופר יהיה בשביל שנוכל לרשום =this.state   ולאתחל את הפרופרטי של הסטיטים שלי כי אם לא יהיה ()super הוא לא יכיר את this. בקונסטרקטור נוכל לאתחל.
+נשים פרופס בתוך הסופר אם נרצה להשתמש בפרופ מסוים שהעברנו מהפרנטס בתוך הקונטרקטור. אם לא נרצה להשתמש אז לא צריך.
+
+בריאקט קלס אנחנו עושים ריאקט אקסטנד קומפוננט וזה נקרא  סטייטפול שנותן לנו גישה ליצור סטייטים דרך הקונסטרקטור ואת כל השיטות של הסייקל כמו למשל componentDidMount
+componentDidUpdate
+componentWillUnmount
+componentWillMount
+
+ריאקט קונסטרקטור שזה ה super נקרא לפני react.component מאונטד ולכן אם לא נשים בקונסטרקטור props ו ב ()super את הפרופרטי me למשל (שבא מהפרנטס) אז נקבל undefind .למשל העברנו את me   הכוונה ל (me)super אז פה זה כן יעבוד
+ולא נקבל undefind.
+class Stateful extends React.Component{ 
+constructor(props);
+super(this.props.me);
+this.state={value: this.props.me }
+}
+ האקסטנד ריאקט קומפוננט נותן גישה לבנות סטייט וגם גישה למטודות הסייקל של הקומפוננטה ולכן בשביל זה צריך את הקונסטרקטור שיתן גישה ל this וגם גישה לפרופס בתוך הקונסטרקטור
+
+Stateful:
+
+Has access to component lifecycle methods and local state.
+
+class Stateful extends React.Component{ 
+constructor(props) {
+ super(props); 
+this.state = { count: 0 }; 
+} 
+componentDidMount() {
+ const { count } = this.state; document.title = `You've clicked ${count} times.`; 
+} 
+componentDidUpdate() { 
+const { count } = this.state; document.title = `You've clicked ${count} times.`; 
+} render() { 
+const { count } = this.state; 
+return ( 
+<div>
+ <p>You've clicked {count} times.</p> <button onClick={() => this.setState({ count: count + 1 })}> Click me </button> </div>
+ ); 
+} 
+}
+
+Stateless:
+
+import React from "react" const Stateless = ({name}) => ( 
+<div>{`Hi ${name}`}</div> 
+);
+
+
+import React, { useState, useEffect } from "react"; 
+const UsingHooks = () => {
+ const [count, setCount] = useState(0);
+ // Similar to componentDidMount and componentDidUpdate: useEffect(() => { 
+// Update the document title using the browser API document.title = `You've clicked ${count} times.`; }); return (
+ // <> is a short syntax for <React.Fragment> and can be used instead of a wrapping div
+ <> 
+<p>You've clicked {count} times.
+</p> <button onClick={() => setCount(count + 1)}> Click me </button>
+ </> 
+); 
+}

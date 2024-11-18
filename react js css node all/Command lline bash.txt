@@ -1,0 +1,20 @@
+Command lline bash
+
+יוצר קובץ חדש
+touch file2.c
+mkdir dirName יותר תיקיה
+rm fileName מוחק קובץ
+cp מעתיק קובץ
+mv מעביר קובץ
+
+יוצר קובץ/או מוסיף אם כבר קיים  ובתוכו סטרינג dr
+echo "dr" newfile.c
+
+מפעיל את הקובץ למשל להריץ קובץ test1.o שהוא אחרי קימפול של myMain.c שזה:
+gcc myMain.c -o test1
+הקומפילר יוצר קובץ test1 שמקומפל לשפת מכונה.
+ואז נריץ את הקובץ המקומפל:
+./test1
+
+נכנס לקובץ
+cat file.c 

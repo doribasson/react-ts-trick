@@ -1,0 +1,169 @@
+ראיונות ב js
+This-
+מצביע לבלוק בזכרון של אותו אוביקט שאיתו הפעלנו.
+למשל  אם יש לי אובייקט person ובתוכו יש לי שני דטה ממבר שהם שם וגיל ופונקציה getFullName שצריכה להדפיס את שני הדטה ממבר. 
+person ={
+ name:"dori",
+ age:35,
+getFullName: function(){
+ console.log(this);
+console.log(this.name, this.age)
+}
+ }
+אז נפעיל את הפונקציה על ידי
+ person.getFullName();
+
+אז ה this שייך ל person ולכן this יקבל רפרנס לאוביקט person. ועל ידי נקודה דטה ממבר הוא יקבל את השם והגיל.
+
+* אם נעשה השמה 
+const myPerson = person.getFullName;
+myPerson();
+ה this יהיה undefined כי ה this של myPerson מצביע על הוינדוס ואין שם name ו age.
+
+עכשיו נניח שיש לי 2 אוביקטים(כמו למעלה)
+person ו person2
+שההבדל היחידי בניהם זה שם וגיל אחר הדטה ממבר שונה. הפונקציה נשארת אותו דבר.
+אז נפעיל
+person.getFullName();
+person2.getFullName();
+
+זה יעבוד אבל בעצם כתבנו שתי פונקציות עם אותו פונקציונליות באותו אובייקט וזה מיותר. הדבר היחידי ששונה זה הדטה ממבר שזה השם והגיל. 
+מה שנוכל לעשות זה borrowing נלווה את הפונקציה מ person ונוריד את הפונקציה מ person2. ועל ידי call, ו appl
+y נוכל להלוות את הפונקציה getFullName ולהשתמש בו באובייקט המבוקש person2. זאת אומרת הרפרנס של ה this יצביע לperson2 אבל ישתמש בפונקציה של person.
+ברגע שthis יצביע ל person2 אז הוא בעצם נמצא בסקופ שלו ויכול לקחת את הדטה ממבר שלו.
+נפעיל את ה call על ידי
+person.getFullName.calll(person2);
+person.getFullName.apply(person2)
+
+ההבדל בין ה call ל apply זה שאם בנוסף אני ירצה להעביר לפוקנציה getFullName ארגומנטים למשל סטרימג שידפיס "lala".
+אז ה call מקבל את הארגומנטים כמשתנה פסיק משתנה
+וה apply מקבל את הארגמונט כמערך.
+זאת אומרת יש לי יכולת להוסיף פרמטרים לפונקציה שאני עושה בה reuse ולהדפיס אותם.
+
+person ={
+ name:"dori",
+ age:35,
+getFullName: function(city,country){
+ console.log(this);
+console.log(this.name, this.age)
+}
+ }
+person.getFullName.calll(person2,"yavne", israel");
+
+person.getFullName.apply(person2,["yavne", israel"]);
+
+דרך טובה יותר זה לעשות את הפונקציה גנרית ואז להגיד לו באיזה אוביקט להשתמש.
+
+const getFullName = function(city,country){
+ console.log(this);
+console.log(this.name, this.age)
+}
+
+person1 ={
+ name:"dori",
+ age:35
+}
+
+person2 ={
+ name:"ran",
+ age:36
+}
+
+getFullName.apply(person1,["yavne", israel"]);
+
+getFullName.apply(person2,["yavne", israel"]);
+
+כאן הוא מפעיל את הפונקציה getFullName על האוביקט שנתנו לו כפרמטר ולכן ה this יצביע לאותו אוביקט וידפיס את הדטה ממבר של אותו person שנתנו לו.
+
+הבעיה כאן שהוא ישר מריץ את זה אבל מה אם אני רוצה  להפעיל את זה רק מאוחר יותר  שאני יגיד לו מתי למשל אחרי תנאי מסוים או איבנט למשל של קליק- רק מתי שאני אלחץ אז תבצע את הפונקציה ? לכן בשביל ההשמה נשתמש ב bind .
+const handler = getFullName.bind(person1);
+
+handler("yavne","israel");
+handler("yavne","israel");
+handler("yavne","israel");
+
+אם יש לי איבנט של קליק אז אני ירצה 
+שבקליק הפונקציה הזאת תפעל
+getFullName.bind(person1,"yavne","israel");
+
+
+
+this vs self
+הthis בודק רק את הרמה שלו בעירכיה זאת אומרת שאם אין לו רפרנס לסקופ אז ה this הוא undefined בלי לבדוק רמה שמעליו.
+לעמת זאת self אותו הדבר אבל בנוסף אם הוא undefined הוא יבדוק ברמה שמעל אם יש לו רפרנס אם כן אז הוא יהיה ה this.
+אם יש לי אובייקט ובתוכו יש לי דטה ממבר ופונקציה ובתוך הפונקציה יש לו עוד פונקציה .
+אז הthis של הפונקציה הפנימית תצביע על undefined כי מי שמפעיל אותה זה הפונקציה ולא האוביקט ולכן הthis יצביע על undefined.
+לעמת זאת אם בפונקציה החיצונית נשים משתנה self=this אז ה self יצביע על האוביקט ואז בפונקציה הפנימית נוכל להשתמש ב self כ clousre שזה אומר שהוא יכול לקחת את ה self מרמה אחת למעלה שנמצא בפונקציה החיצונית..
+אם לא נעשה self=this אז ה this יראה undefined כי הפונקציה הפנימית לא תצביע לאוביקט אלא לפונקציה החיצונית. אז היא תעלה רמה אחת למעלה ותראה מי הפעיל אותה וזה האוביקט ולכן תדפיס את הדטה ממבר.
+
+
+
+
+
+
+
+arrow function vs regular function?
+
+הארו פנקשין חדש, נקי וקצר יותר מבחינת כתיב.
+הארו פנקשין אנונמי ויש לו השמה ולכן בתחיל התכנית אין לו הויסטינג כמו שיש לפנקשין רגיל או ל var. זה אומר שהגדרת הארופנקשין  חייב להיות מעל ההפעלה  או ההדפסה שלו. לעמת פנוקציה שיכולה להיות גם מתחת ולעבוד.
+
+ארופנקשין תמיד מבצע להורה שלו ולכן הוא לא ישנה את הסקופ שלו. הסקופ תמיד יהיה ההורה גם אם זה אוביקט שבתוכו פונקציה ובתוכו פונקציה.
+
+לארופנקשין אין arguments bindinng זאת אומרת לא נוכל להשתמש ב arguments בתוך הפונקציה שזה הארגומנטים שאני שולח לפונקציה. בפונקציה רגילה כן נוכל להשתמש בארגומנט ולראות את כל הארגומנטים ששלחנו.
+מה שכן אפשר לעשות עם ארופנקשין שיפתור לנו את זה - זה לקבל את זה עם ספרידאופרטור  {}<=(props...) = fn ואז נקבל אותם כמערך.
+
+ה this - לארופנקשין אין  משלו this  הוא יצביע תמיד להורה שלו ולכן ברירת המחדל של הסקופ שאליו יצביע הthis פה יהיה ה window. 
+ פונקציה רגילה בתוך אובייקט לעמת זאת יש לה this ותצביע לאובייקט אבל אם בתוך הפונקציה הזאת יש עוד פונקציה אז הthis שלה יצביע לגלובל אובגקט שזה window הדיפולטיבי כי אין לו רפרנס.
+בשביל לפתור זאת בפונקציה החיצונית נשים משתנה שיהיה שווה ל this ואז בפונקציה הפנימית נוכל להשתמש בה.
+
+פתרון נוסף הוא שהפונקציה הפנימית תהיה ארופנקשין ולא תיצור סקופ חדש כמו שפנקשין רגילה עושה אלא הסקופ ישאר עדיין אותו סקופ אז ה this יהיה על אותו סקופ וזה יהיה בסדר. ובגלל ש this תמיד יעלה ברמה להורה הוא יקח משם את הסקופ שזה this לאוביקט.
+זה אומר שהסקופ לא ישתנה אלא תמיד ישאר מצביע להורה שזה ארופנקשין.
+
+ person9 = {
+  name: "doriiiiiii",
+  age: 999999,
+  getFullName: function (city = "defaultCity", country) {
+    var self = this;
+    console.log(`${this.name} and ${this.age} and ${city} and ${country}`);
+    (function () {
+      // console.log(`${this.name} and ${this.age} and ${city} and ${country}`);//this will not work undefined
+      console.log(`${self.name} and ${self.age} and ${city} and ${country}`);
+      console.log(JSON.stringify(self)); //{"name":"doriiiiiii","age":999999}
+      console.log(JSON.stringify(this)); //undefined
+    })();
+  }
+};
+
+
+ person9 = {
+  name: "doriiiiiii",
+  age: 999999,
+  getFullName: function (city = "defaultCity", country) {
+    var self = this; //נשמר בקלוזר
+    console.log(`${this.name} and ${this.age} and ${city} and ${country}`);
+    (function () { // יוצר סקופ חדש
+      // console.log(`${this.name} and ${this.age} and ${city} and ${country}`);//this will not work undefined
+//נשתמש בסלפ קיבלנו אותו מהקלוזר
+      console.log(`${self.name} and ${self.age} and ${city} and ${country}`);
+      console.log(JSON.stringify(self)); //{"name":"doriiiiiii","age":999999}
+      console.log(JSON.stringify(this)); //undefined
+    })();
+  }
+};
+
+
+פתרון עם ארופנקשין
+ person9 = {
+  name: "doriiiiiii",
+  age: 999999,
+  getFullName: function (city = "defaultCity", country) {
+    var self = this;
+    console.log(`${this.name} and ${this.age} and ${city} and ${country}`);
+    (()=> {
+      // console.log(`${this.name} and ${this.age} and ${city} and ${country}`);//this will not work undefined
+      console.log(`${self.name} and ${self.age} and ${city} and ${country}`);
+      console.log(JSON.stringify(self)); //{"name":"doriiiiiii","age":999999}
+      console.log(JSON.stringify(this)); //undefined
+    })();
+  }
+};

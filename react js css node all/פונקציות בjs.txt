@@ -1,0 +1,154 @@
+פונקציות בjs 
+reduce
+לוקחת מערך ומחזירה ערך מצטבר לפי תנאי מתוך המערך למשל
+const test = arr.reduce((acc,val)=>{
+ return acc+val;
+},0);
+
+filter
+ עובר על כל המערך ומחזיר למערך חדש את כל האייטימים העומדים בתנאי
+const test = arr.filter((item)=>{
+ return item>5;
+});
+
+map 
+עובר על כל המערך ומחזיר למערך חדש את כל האייטימים העומדים בתנאי true ומה שלא עומד בתנאי שם בו false
+const test = arr.map((item)=>{
+ return item>5;
+});
+
+forEach
+לא מחזיר כלום..רק עובר על המערך..
+בגלל שהוא לא מחזיר כלום אז הוא לא יציג לנו כלום בריאט jsx ב html. כי הוא undefind.אם נרצה שיציג נשתמש ב ()arr.map
+arr.forEach((Item )=>{ 
+if (item>5)
+ ...
+})
+
+כל הפונקציות הם לא משנות את המערך עצמו. או שהם מעתיקים למערך חדש או שרק עוברים עליו. זא unmutate.
+
+נשים לב שארופנקשין ה item זה בעצם פרמטר בתוך פונקציה אנונימית. זא
+arr.forEach((Item,index)=>{ })
+זה כמו
+arr.forEach(function(Item,index){ })
+
+
+סטרינג
+
+includes()
+const word = '_';
+sentence.includes(word)
+מחזיר true או false עם המילה או התו נמצאים בסטרינג.
+
+charAt(i) עובד עם סטרינג ,איזה תו נמצא במיקום 
+function space(){
+let res= "";
+for(let i=0; i<str.length; i++){
+if(str.charAt(i) !== ' '){
+   res+=str.charAt(i)+' ';
+ }
+else res+='\n'+' ';
+}
+return res;
+}
+
+let print = space();
+console.log(print);
+
+
+some()
+const check=substrings.some(v => str.includes(v))
+עובר תא תא במערך ומחזיר true או false עם נמצא או לא.
+עובד רק על מערך כי עובר תא תא ולא עובד על מחרוזת. אפשר לקחת מחרוזת ולהפוך אותה ל למערך על ידי  
+split()
+ const arrayStr = str.split("");
+  ואז כל אות במחרוזת str יוכנס לתא חדש במערך arrayStr.
+ואז להשתמש ב some.
+
+   ספליט לא משנה את המחרוזת המקורית אלא מחזיר מערך חדש עם אותם אותיות של המחרוזת או מספרים.
+
+
+findIndex()
+מחזיר את האינדקס של אותו תא עם התנאי המתאים
+array1 = [5, 12, 8, 130, 44];
+
+const isLargeNumber = (element) => element > 13;
+
+console.log(array1.findIndex(isLargeNumber));
+// expected output: 3
+
+
+indexOf
+מחזיר את האינדקס הראשון של המחרוזות בסטרינג או את אינדקס מיקום התא במחרוזת העונה למילה ואם אין תא כזה יחזיר 1-.
+const beasts = ['ant', 'bison', 'camel', 'duck', 'bison'];
+console.log(beasts.indexOf('bison'))
+// expected output: 1
+
+// start from index 2
+console.log(beasts.indexOf('bison', 2));
+// expected output: 4 
+הפרמטר השני שהוא 2 אומר לו תתחיל מאינדקס 2 את הבדיקה
+
+console.log(beasts.indexOf('giraffe'));
+// expected output: -1
+
+Join()
+מחזיר מחרוזת חדשה.
+ הופך ממערך למחרוזת.
+כל תא מהמערך משרשר למחרוזת לפי הפרמטר ששמתי.
+const elements = ['Fire', 'Air', 'Water'];
+
+console.log(elements.join());
+// expected output: "Fire,Air,Water"
+
+console.log(elements.join(''));
+// expected output: "FireAirWater"
+
+console.log(elements.join('-'));
+// expected output: "Fire-Air-Water"
+
+
+מערך בגודל 10
+const newArr = Array.from({length: 10})
+או
+
+const newArr = [...Array(10)];
+או
+const newArr = new Array(10);
+
+ואם נרצה שבכל תא יהיה ערך 0 נעשה:
+const newArr = [...Array(10)].fill(0);
+או
+const newArr = new Array(10).fill(0);
+
+או אם נרצה גם להכניס לכל תא דינמי
+const newArr = [...Array(10)].
+map((item,i) => ++i);
+
+
+
+Debounce from.. loadsh..
+בעצם מאפשר להפעיל פונקציה לאחר כמה שניות שנרצה. מקבל פונקציה ושניות. 
+למשל  יש לי אינפוט והמשתמש מקליד בחיפוש כלב ואז onChange נכנס לפעולה כי הוא הקליד תו ישנה משהו אז קודם יחפש את האות כ כי זה התו הראשון של כלב.. אם אחרי כל תו נשלח קריאה לסרבר זה לא יהיה נכון וסתם יקח מהביצועים והמשאבים. לכן נראה לעשות סיטטיימהאוט שאומרי רק אחרי כמה שניות תפעיל את הפונקציה כי עד אז המשתמש יסיים להקליד את המילה כלב..נצרך גם לעשות clearTimeout לאותו משתנה שמחזיק את ה setTimeout שידע לסיים את הפעולה אם היא נדרסה לפני הזמן שנתנו לה.
+זאת אומרת אם נקליד כלב אז במקום כל תו שהקלדנו  שיחכה 2 שניות ויפעל לאחר מכן יבקש בקשה בכל אותו מהסרבר לאחר 2 שניות. אז clearTimeout בעצם יגיד להם להפסיק חוץ מלתו האחרון שהקלדנו.
+במקום שאנחנו ניצור את זה  יש פונקציה מוכנה שנקראת Debounce ונמצאת בתוך loadash ששייך ל js. ונצטרך לתת לה רק את הפונקציה ושניות.
+
+
+flat() and flatMap()
+flat() כמו flat(1)  1 דיפולט הוא
+יוצא מערך חדש ומשרש אליו את כל האייטמים במערך ואם יש אייטם שהוא מערך אז מעתיק את האיטמים שלו למערך. בעצם מעלים את הסאב מערך. הפרמטר שהוא מקבל אומר עד כמה עמוק אתה רוצה להיכנס לסב מערך   מערך ולשרשר למערך החדש.
+flatMap()
+מקבל קולבק ועובר על איטם איטם נכנס עד סרב מערך של 1. אם יש לי יותר מסרב מערך של 1 אז נצטרך אחרי גם את ה flat.
+
+
+const arr = [1, 2, [3, 4, 5], 6, 7]; console.log(arr.flat());
+ // expected output [1, 2, 3, 4, 5, 6, 7]
+
+//depth 2 example const arr2 = [[[1, 2], 3, 4, 5]] ; console.log(arr2.flat(2));
+ // expected output [1, 2, 3, 4, 5]
+
+const arr3 = [1, 2, [4, 5], 6, 7, [8]] ; console.log(arr3.flatMap((element) => element)); 
+// expected output [1, 2, 4, 5, 6, 7, 8]
+
+const arr4 = [1, 2, [3, [4, 5, [6, 7]]]] ; console.log(arr4.flatMap((element) => element).flat(2)) ; 
+// expected output [1, 2, 3, 4, 5, 6, 7] 

@@ -1,0 +1,16 @@
+שעון מחוגים 
+
+function angleClock(hour, minutes) {
+    const minuteAngle = minutes * 6;
+    const hourAngle = (hour * 30) + (minutes * 0.5);
+    const angle = Math.abs(hourAngle - minuteAngle);
+    return Math.min(angle, 360 - angle);
+}
+
+console.log(angleClock(15,10));
+
+כל תזוזה במחוג הגדול של הדקות זה מעלה ב 6 וכך מקטין את הזוית וגם מוזיז את השעה בקצת.
+למשל אם השעה 3 וחצי אז המחוג של השעה הוא לא על 3 בדיוק אלא קצת מתחת ל 3 ולכן זה משנה את גודל הזוית בכללי.
+הדקות הם על החצי שזה אומר 180  (כי כל תזוזה בדקה זה 6 כי כל 5 דקות עובר לספרה אחרת בדקות בשעון שזה 30 מעלות.) ואנחנו עושים 30 תזוזות עד וחצי.
+
+https://dev.to/alisabaj/finding-the-angle-between-the-hands-of-a-clock-2lg1

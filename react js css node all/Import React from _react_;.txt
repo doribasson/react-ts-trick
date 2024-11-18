@@ -1,0 +1,28 @@
+Import React from "react";
+import "./styles.css";
+
+export default function App() {
+  const func=(num)=>{
+    let count=0;
+    console.log(num);
+    let binary=num.toString(2);
+    console.log(binary);
+    for(let j=0; j<binary.length; j++){
+      count=count+parseInt(binary[j],10);
+      }
+    console.log(count);
+    if(count%2==0)
+      console.log("sum of all 1 is even");
+    else
+      console.log("sum of all 1 is odd");
+      
+    }
+  
+  return (
+    <div className="App">
+      <button onClick={()=>func(4)}>click</button>
+      <h1>Hello CodeSandbo</h1>
+      <h2>Start editing to see some magic happen!</h2>
+    </div>
+  );
+}

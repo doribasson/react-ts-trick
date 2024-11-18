@@ -1,0 +1,73 @@
+Splice js
+משנה את המערך המקורי.
+הפרמטר הראשון מציין מיקום האינדקס. 0 התא הראשון, 1- התא האחרון או array.length התא האחרון.
+
+הפרמטר השני מציין כמה למחוק אם למחוק.  0 מציין אל תמחק ו1 מציין תמחק תא אחד ממקום האינדקס כולל.
+
+
+fruits.splice(-1, 1);
+1- מתחיל מסוף המערך.
+מוחק את התא האחרון במערך.
+fruits.splice(0, 1);
+מוחק את התא הראשון במערך.
+
+fruits.splice(2, 0,"lala");
+מוסיף עוד תא lala שיהיה במיקום 2 .
+
+fruits.splice(fruits.length,0,"lala");
+מוסיף עוד תא בסוף המערך שהוא lala.
+
+fruits.splice(2, 1, "Lemon", "Kiwi");
+תמחק את תא מספר 2 ותכניס שני תאים במקומו לימון וקיווי ותמשיך את שאר התאים כמו שהם.
+
+fruits.splice(2, 2, "Lemon", "Kiwi");
+תמחק שני תאים מאינדקס מספר 2 כולל ותכניס שני תאים חדשים אחריהם לימון וקיווי.
+
+
+Slice  עובד על מערך
+מחזיר מערך חדש ולא משנה את המקורי.
+const temp = animals.slice(0);
+מעתיק ומחזיר את המערך כמו שהוא
+
+const temp = animals.slice(2,animals.length);
+תביא לי מערך חדש מאינדקס 2 כולל  עד הסוף.
+
+const temp = animals.slice(2);
+תביא לי מערך חדש מאינדקס 2 כולל  עד הסוף.
+
+
+const temp = animals.slice(2,4);
+תביא לי מערך חדש מאינדקס 2 כולל עד אינדקס 4 לא כולל.
+
+
+אם נרצה לעבוד עם ריאקט למשל בהוספה או מחיקה דרך splice.  נצטרך קודם להעתיק עמוק ולא רדוד את  המערך המקורי. כי אם לא הוא לא ירנדר ויעדכן את המערך.
+const[arr, setArr]=useState(["a"]);
+const newArr=[...arr]; העתקה עמוקה
+או
+const newArr = arr.slice();
+ואז
+newArr.splice(0,1);
+setArr(newArr);
+
+מחיקה אפשר דרך
+const  newArr = arr.filter(item => item !=="a")
+setArr(newArr);
+או
+setArr(prevArr=> prevArr.filter(item => item !=="a"));
+או
+const index= newArr.indexOf("a");
+newArr.splice(index,1);
+setArr(newArr);
+
+
+
+אם יש לי שני מערכים של 
+[1,2,3]
+[1]
+
+אני רוצה שיחזור [1]
+```
+const set = new Set(array2)
+array1.filter(set.has.bind(set));
+```
+

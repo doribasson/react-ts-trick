@@ -1,0 +1,88 @@
+אם אני רוצה את כל הארגומנטים מהפונקציה  נעשה args...
+או נרצה את הכל במערך [args...]
+למשל
+  function run(...props){
+console.log(props);
+}
+
+function run2(props){
+console.log(props);
+if(props.val > 1)
+  console.log("bigger");
+ return function(...props){
+     console.log(props);
+  }
+}
+
+run(5,6,8,1); //[5,6,8,1]
+
+run2("dori")(1,5,8); //"dori" [1,5,8]
+
+run2({term:">",val:2})(1,5,8);
+//{a:4,b:8} [1,5,8]
+
+
+
+
+
+
+
+
+
+function run(...props){
+console.log(props);
+//get all props in array [5,6,8,1}
+
+console.log(arguments);
+//arguments is a object {0:5,1:6,2:8,3:1}
+
+console.log([...arguments]);
+//make it array [5,6,8,1}
+}
+function run2(props){
+console.log(props);
+if(props.val > 1)
+  console.log("bigger");
+ return function(...props){
+     console.log(props);
+
+const test = [...props].reduce((acc,val)=>{
+ return acc+val;
+},0);
+return test;
+  }
+}
+run(5,6,8,1); 
+run2("dori")(1,5,8); //"dori" [1,5,8]
+run2({term:">",val:2})(1,5,8);
+//{a:4,b:8} [1,5,8]
+const run3 = run2("dori")(1,5,8)
+console.log(run3);//14
+
+
+
+
+
+
+function term(term,val){
+ if (term == '>'){
+ if(val > 1) return "bigger";
+else return "small than 1";
+}
+return;
+}
+
+function run2(props){
+console.log(props);
+const ter = term(props.term, props.val);
+ console.log(ter);
+ return function(...props){
+     console.log(props);
+  }
+}
+run2({term:">",val:1})(1,5,8);
+
+
+
+
+

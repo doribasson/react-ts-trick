@@ -1,0 +1,7 @@
+Recursion רקורסיה
+רקורסית חזקה כולל מינוס
+function power(base,exponent){ 
+if (exponent < 0) 
+return power(base, exponent+1)/base 
+else if (exponent===0) return 1; else return base*power(base, exponent-1);
+ };

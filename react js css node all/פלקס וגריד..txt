@@ -1,0 +1,169 @@
+פלקס וגריד.
+
+פלקס -מבוסס קונטנט
+עושים נגיד שני דיבים ואז עוטפים אותם בדיב שנקרא קונטנר.
+לאחר מכן אפשר לשחק עם הפלקס.
+בדיב של הקונטנר נוכל לעשות.
+.container{
+על כל הגובה של המסך
+height:100vh;
+שנוכל להשתמש בפלקס:
+display:flex;
+שנוכל לשנות אם זה יהיה כשורה או עמודה; האיתחול תמיד שורה
+flex-direction:column or row
+
+שכל הדיבים יהיה באמצע של השורה השורה או העמודה תלוי בפלקס דיירקשין
+align-items:center;
+
+שנוכל את כל התוכן של הדיבים שיהיו באמצע.
+justify-content:center;
+אם נגיד יש לי מלא בנים וה width שלהם עובר את החלון אז ה wrap גורם לדיבים שלא נשאר מקום לפול לשורה למטה
+flex-wrap:wrap;
+}
+
+בתוך אחד הדיבים הבנים של קונטיינר
+נוכל לעשות למשל:
+display:flex;
+margin:auto auto;
+אם רוצים דרך הדיב הזה יהיה באמצע
+justify-self:center;
+aligb-self:center;
+
+בתוך הבנים שהם הדיבים של קונטיינר נוכל לתת לכל דיב את הגודל.
+flex:0.2
+
+ובדיב השני נעשה 
+ flex:0.8
+
+אפשר גם לשים בבנים
+פלקס בסיס - מביא את הגודל ההתחלתי של הדיב הזה.
+הפלקס גרואו - אם נשאר עוד מקום של מרווח אחרי שני הדיבים אז הוא ימתח את אותו דיב עם flex-grow:1 ימתח אותו עד הסוף.
+בכל אחד מהבנים נשים פלקס גראו וזה עם הפלקס הגרואו הגדול יותר הוא ימתח אותו יותר אם יש מקום.
+הפלקס שרינק ככל שגדול יותר הוא יקטין אותו יותר.
+פלקס שרינק כאשר אני מקטין את אז הדיב של השרינק עם ה 1 לא יתקטן אלא רק הדיב השני
+
+ flex-basis: 400px;
+ flex-grow:1;
+ flex-shrink:1;
+
+גריד- מבוסס קונטיינר.
+עושים נגיד שני דיבים ואז עוטפים אותם בדיב שנקרא קונטנר.
+.container{
+display:grid;   שנוכל להשתמש בגריד
+height:100vh;
+width:100vw;
+gap:10px;
+עשינו פה שהקונטנר יהיה 3 שורות  ו 2 עמודות 
+grid-template:1fr 3fr 1fr / 1fr 1fr
+
+איך אני רוצה שזה יראה מבחינת ui
+מה שבתוך זה הדיבים.
+grid-template-area:
+"logo header"
+"nav content"
+"footer footer";
+
+ועל כל דיב נב לוגו הדר קונטנט ופוטר נשים grid-area
+.nav{
+ grid-area:nav;
+}
+
+
+
+
+
+
+בפלקס.. 
+אם אני רוצה לעשות קונטניר של header body footer
+אז יש כמה אופציות.
+או לעשות 3 דיב שכל אחד מקבל את הגודל שלו על פי flex.
+למשל 
+.container{
+display:flex;
+flex-direction:column;
+height:100vh;
+}
+.header{
+flex: 0.05;
+}
+
+.body{
+flex: 0.9;// or 1 - all the space
+overflow-y: auto;
+}
+
+.footer{
+flex: 0.05;
+}
+
+קודם כל בניתי קונטינר שיהיה לפי עמודה מלמעלה למטה ולא משמאל לימין כשורה.
+ואז לכל דיב נתתי את הגודל שאני רוצה. עכשיו ב body שמנו אוברפלוו כי אם לא נעשה סקרול בבדי אז כל התוכן בבדי יזלוג לheader ו ל footer.
+
+אופציה שניה זה לעשות ב header 
+פוזישין פיקסד. ואז בדיב אחר את הבדי עם התוכן.
+ובבעוד דיב שזה הפוטר נעשה גם פוזישין פיקסד אבל ניתן לו bottom:0
+שתמיד יהיה למטה.
+
+
+
+
+
+אופציה של הפלקס דוגמא 2
+html,
+body{
+  margin: 0;
+  padding: 0;
+}
+.f-container{
+  height: 100vh; /* for shorter content */
+  display: flex;
+  flex-direction: column;
+    
+  /*ie10*/
+  display: -ms-flexbox;
+  -ms-flex-direction: column;
+}
+
+.main{
+  background-color: #eee;
+  flex: 1;
+  
+  .main{
+  background-color: #eee;
+  flex: 1;
+  
+  /*ie10*/
+  -ms-flex: 1 1 auto; /*needs both shrink and grow*/
+}
+
+header,
+footer{
+  background-color: #ccc;
+  flex-basis: 40px;
+  
+  /*ie10*/
+  -ms-flex-preferred-size: 20px;
+  
+  /*center align of links*/
+  display: flex;
+  align-items: center; /*vertical*/
+  justify-content: space-around; /*or space-between*/
+  /*ie10*/
+  display: -ms-flexbox;
+  -ms-flex-align: center; /*vertical*/
+  -ms-flex-line-pack: distribute; /*or justify*/
+}
+
+footer {
+  /*ie10 short content*/
+  margin-top: auto; 
+}
+header a{
+  /*ie10*/ 
+  /*hack to trigger the layout for horizontal alignment distribute/justify*/
+  display: inline-block;
+}
+/* fixed header and footer with scrollable main section */
+.fixed-hf .main{
+  overflow-y: scroll;
+}
