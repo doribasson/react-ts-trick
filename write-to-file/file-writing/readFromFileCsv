@@ -1,0 +1,36 @@
+const fs = require('fs').promises;
+
+async function csvToObjectArray(filePath) {
+    try {
+        const data = await fs.readFile(filePath, 'utf8');
+        const dataArray = [];
+
+        const lines = data.split('\n');
+        lines.forEach(line => {
+            const values = line.split(';');
+            const obj = {};
+            values.forEach((value, index) => {
+                obj[`field_${index}`] = value.trim();
+            });
+            dataArray.push(obj);
+        });
+
+        return dataArray;
+    } catch (err) {
+        throw err;
+    }
+}
+
+// Example usage:
+const filePath = '../data.csv'; // Path to your CSV file
+csvToObjectArray(filePath)
+    .then(dataArray => {
+        console.log('Array of objects created from CSV file:', dataArray);
+    })
+    .catch(err => {
+        console.error('Error reading CSV file:', err);
+    });
+
+    setTimeout(()=>{
+        console.log("doriiiiiiiiiiiiiiiiiiiiiiiiii")
+    },0)

@@ -1,0 +1,31 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  /* place-items: center; */
+  /* min-width: 320px;  */
+  /* min-height: 100vh; */
+}
+
+.app_container > ul{
+margin: 0;
+padding:0;
+border: 10px solid green;
+/* background-color: green; */
+height: 300px;
+
+}
+
+.app_container > ul > li{
+  list-style-type: none;
+}
+
+.todo_container{
+ display: flex;
+ width:60%;
+ background-color: red;
+ gap: 2rem;
+ font-size: 1.5rem;
+ border: 1px solid blue;
+}
