@@ -1,0 +1,6 @@
+cd .\fullstack\frontend
+npm create vite@latest ... Project name: » frontend  => react => typescript + swc
+cd frontend => npm i => npm run dev
+npm i -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+in tailwind.config.js - content:[".index.html", "./src/**/*.{js, ts, jsx, tsx}"]

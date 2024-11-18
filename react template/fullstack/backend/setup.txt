@@ -1,0 +1,6 @@
+npm init  .... entry point: "./src/index.ts" or "index.ts"
+npm i express cors dotenv mongodb mongoose
+npm i @types/cors @types/express @types/node ts-node typescript nodemon --save-dev
+in package.json   "scripts": {
+    "dev": "nodemon"
+  },
