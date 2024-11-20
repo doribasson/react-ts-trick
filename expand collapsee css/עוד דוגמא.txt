@@ -1,0 +1,173 @@
+https://medium.com/edonec/build-a-react-collapsible-component-from-scratch-using-react-hooks-typescript-73dfd02c9208
+
+
+import Collapsible from "./Collapsible";
+import React from "react";
+import "../assets/index.css";
+import "../assets/icons.css";
+const App: React.FC = () => {
+  return (
+    <Collapsible open header="collapse header">
+      Consectetur adipiscing elit pellentesque habitant morbi tristique.
+      Pulvinar pellentesque habitant morbi tristique. Vel quam elementum
+      pulvinar etiam. Pulvinar pellentesque habitant morbi tristique senectus
+    </Collapsible>
+  );
+};
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+import React, { useEffect, useRef, useState } from "react";
+interface IProps {
+  open?: boolean;
+  header: string | React.ReactNode;
+  headerClassName?: string;
+  titleClassName?: string;
+  iconButtonClassName?: string;
+  contentClassName?: string;
+  contentContainerClassName?: string;
+  collapsibleClassName?: string;
+}
+
+const Collapsible: React.FC<IProps> = ({
+  open,
+  collapsibleClassName = "collapsible-card-edonec",
+  headerClassName = "collapsible-header-edonec",
+  titleClassName = "title-text-edonec",
+  iconButtonClassName = "collapsible-icon-button-edonec",
+  contentClassName = "collapsible-content-edonec",
+  contentContainerClassName = "collapsible-content-padding-edonec",
+  children,
+  header
+}) => {
+  const [isOpen, setIsOpen] = useState(open);
+  const [height, setHeight] = useState<number | undefined>(
+    open ? undefined : 0
+  );
+  const ref = useRef<HTMLDivElement>(null);
+  const handleFilterOpening = () => {
+    setIsOpen((prev) => !prev);
+  };
+  useEffect(() => {
+    if (!height || !isOpen || !ref.current) return undefined;
+    // @ts-ignore
+    const resizeObserver = new ResizeObserver((el) => {
+      setHeight(el[0].contentRect.height);
+    });
+    resizeObserver.observe(ref.current);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [height, isOpen]);
+  useEffect(() => {
+    if (isOpen) setHeight(ref.current?.getBoundingClientRect().height);
+    else setHeight(0);
+  }, [isOpen]);
+  return (
+    <>
+      <div className={collapsibleClassName}>
+        <div>
+          <div className={headerClassName}>
+            <div className={titleClassName}>{header}</div>
+            <button
+              type="button"
+              className={iconButtonClassName}
+              onClick={handleFilterOpening}
+            >
+              <i
+                className={`fas-edonec fa-chevron-down-edonec ${
+                  isOpen
+                    ? "rotate-center-edonec down"
+                    : "rotate-center-edonec up"
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+        <div className={contentClassName} style={{ height }}>
+          <div ref={ref}>
+            <div className={contentContainerClassName}>{children}</div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Collapsible;
+
+
+
+
+
+
+
+
+
+
+.collapsible-content-edonec {
+  overflow: hidden;
+  transition: height 0.2s ease-in-out;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.title-text-edonec {
+  display: block;
+  font-size: 1em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+.collapsible-header-edonec {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 20px 2px 20px;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.collapsible-content-padding-edonec {
+  padding: 20px 20px 20px 20px;
+}
+.rotate-center-edonec {
+  -moz-transition: all 0.2s linear;
+  -webkit-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.rotate-center-edonec.down {
+  -moz-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.rotate-center-edonec.up {
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+.collapsible-icon-button-edonec {
+  cursor: pointer;
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+}
+
+.collapsible-card-edonec {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.collapsible-card-edonec:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
