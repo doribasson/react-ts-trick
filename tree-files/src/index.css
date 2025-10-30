@@ -1,0 +1,62 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+.file-tree {
+  font-family: monospace;
+  font-size: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tree-node {
+  margin: 2px 0;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.tree-item:hover {
+  background-color: #f2f2f2;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+.icon.folder {
+  color: #f5b301;
+}
+
+.icon.file {
+  color: #3498db;
+}
+
+/* מרווחים לפי עומק */
+.depth-0 .tree-item { padding-left: 4px; }
+.depth-1 .tree-item { padding-left: 20px; }
+.depth-2 .tree-item { padding-left: 36px; }
+.depth-3 .tree-item { padding-left: 52px; }
+.depth-4 .tree-item { padding-left: 68px; }
+.depth-5 .tree-item { padding-left: 84px; }
+
+/* שגיאה וטעינה */
+.loading {
+  color: #aaa;
+  font-style: italic;
+  padding-left: 28px;
+}
+
+.error {
+  color: #d33;
+  padding-left: 28px;
+}

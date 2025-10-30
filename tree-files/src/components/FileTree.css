@@ -1,0 +1,71 @@
+/* src/components/FileTree.css */
+
+.filetree-container {
+  display: flex;
+  gap: 16px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.filetree {
+  width: 250px;
+  border-right: 1px solid #ccc;
+  padding-right: 8px;
+  list-style: none;
+  margin: 0;
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.tree-item:hover {
+  background-color: #f2f2f2;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+.icon.folder {
+  color: #f5b301;
+}
+
+.icon.file {
+  color: #3498db;
+}
+
+/* Loading and error */
+.tree-loading {
+  font-style: italic;
+  color: #aaa;
+  padding-left: 16px;
+}
+
+.tree-error {
+  color: #d33;
+  padding-left: 16px;
+}
+
+/* File preview */
+.file-preview {
+  flex: 1;
+  background-color: #f9f9f9;
+  min-height: 300px;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.preview-text {
+  color: #666;
+  font-style: italic;
+  margin-top: 4px;
+}
